@@ -4,6 +4,10 @@
 
 This repository is intentionally packaged as an independently installable open-source project. It does **not** include large third-party MATLAB source trees under `src/`.
 
+Rafaely figure plotting assets are intentionally moved out of this open-source repository into a private sibling bundle:
+
+`../_rafaely_plot_bundle/rafaely_plotting`
+
 ## Python Requirement
 
 This package targets **Python 3.11+**.
@@ -26,6 +30,16 @@ python -m build
 pip install --force-reinstall dist/*.whl
 python -c "from spherical_array_processing.repro import sht; print(sht.getFliegeNodes(2)[0].shape)"
 ```
+
+## Repository Structure
+
+The open-source repository now keeps a small layered structure:
+
+`spherical_array_processing/` contains the installable library.
+
+`tests/` is layered by purpose (`core/`, `repro/`, `plotting/`, `experimental/`).
+
+`scripts/experimental/` contains optional FOA training/evaluation helper scripts.
 
 ## Repro Layer Behavior Without External Assets
 
@@ -58,4 +72,3 @@ Without this variable, deterministic internal fallback is used by default.
 ## License
 
 MIT. See [LICENSE](LICENSE).
-

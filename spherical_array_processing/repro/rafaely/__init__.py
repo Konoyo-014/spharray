@@ -20,7 +20,6 @@ from .math import (
     uniform_sampling,
     wigner_d_matrix,
 )
-from .plot import plot_aliasing, plot_balloon, plot_contour, plot_sampling, plot_sphere
 
 __all__ = [
     "RAFAELY_SOURCE_ROOT",
@@ -38,9 +37,4 @@ __all__ = [
     "sh2",
     "uniform_sampling",
     "wigner_d_matrix",
-    "plot_aliasing",
-    "plot_balloon",
-    "plot_contour",
-    "plot_sampling",
-    "plot_sphere",
 ]
