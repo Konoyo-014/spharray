@@ -1,20 +1,20 @@
 import numpy as np
 
-from spherical_array_processing.repro import array_response_simulator as ars
-from spherical_array_processing.repro import sht
-from spherical_array_processing.repro.sht import functions as sht_functions
-from spherical_array_processing.repro.politis import POLITIS_SOURCE_ROOT
-from spherical_array_processing.repro.rafaely import RAFAELY_SOURCE_ROOT
+from spherical_array_processing.toolkit import array_response_simulator as ars
+from spherical_array_processing.toolkit import sht
+from spherical_array_processing.toolkit.sht import functions as sht_functions
+from spherical_array_processing.toolkit.spatial import SPATIAL_RESOURCE_DIR
+from spherical_array_processing.toolkit.harmonics import HARMONICS_RESOURCE_DIR
 
 
-def test_repro_reference_roots_are_resolvable():
-    assert POLITIS_SOURCE_ROOT.exists()
-    assert POLITIS_SOURCE_ROOT.is_dir()
-    assert RAFAELY_SOURCE_ROOT.exists()
-    assert RAFAELY_SOURCE_ROOT.is_dir()
+def test_toolkit_resource_dirs_are_resolvable():
+    assert SPATIAL_RESOURCE_DIR.exists()
+    assert SPATIAL_RESOURCE_DIR.is_dir()
+    assert HARMONICS_RESOURCE_DIR.exists()
+    assert HARMONICS_RESOURCE_DIR.is_dir()
 
 
-def test_repro_exports_have_expected_surface():
+def test_toolkit_exports_have_expected_surface():
     assert "getFliegeNodes" in sht.__all__
     assert "getTdesign" in sht.__all__
     assert "simulateSphArray" in ars.__all__
@@ -64,7 +64,7 @@ def test_array_response_simulator_smoke():
     assert tfs.shape == (17, 2, 2)
 
 
-def test_get_fliege_nodes_uses_deterministic_fallback_when_reference_missing(tmp_path, monkeypatch):
+def test_get_fliege_nodes_uses_deterministic_fallback_when_resource_missing(tmp_path, monkeypatch):
     monkeypatch.setattr(sht_functions, "_FLIEGE_MAT", tmp_path / "missing_fliege.mat")
     v1, d1, w1 = sht.getFliegeNodes(5)
     v2, d2, w2 = sht.getFliegeNodes(5)

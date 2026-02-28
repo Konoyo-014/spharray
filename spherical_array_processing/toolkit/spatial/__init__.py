@@ -1,7 +1,6 @@
-from .._reference_paths import provider_reference_root
+from .._resource_paths import provider_resource_root
 
-POLITIS_SOURCE_ROOT = provider_reference_root("politis")
-POLITIS_SOURCE_ROOT.mkdir(parents=True, exist_ok=True)
+SPATIAL_RESOURCE_DIR = provider_resource_root("spatial")
 
 from .functions import (
     arraySHTfiltersMeas_regLS,
@@ -77,7 +76,7 @@ from .doa_and_diffuseness import (
 )
 
 __all__ = [
-    "POLITIS_SOURCE_ROOT",
+    "SPATIAL_RESOURCE_DIR",
     "arraySHTfiltersMeas_regLS",
     "arraySHTfiltersMeas_regLSHD",
     "arraySHTfilters_diffEQ",

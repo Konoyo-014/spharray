@@ -25,5 +25,4 @@ Keep changes focused and include tests for behavior changes.
 
 Document API or behavior changes in `README.md` when applicable.
 
-If a change affects `repro` fallback behavior, include a test that runs without external reference assets.
-
+If a change affects `toolkit` fallback behavior, include a test that runs without optional resource files.

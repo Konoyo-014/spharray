@@ -1,8 +1,7 @@
-from .._reference_paths import provider_reference_root
+from .._resource_paths import provider_resource_root
 
 
-RAFAELY_SOURCE_ROOT = provider_reference_root("rafaely")
-RAFAELY_SOURCE_ROOT.mkdir(parents=True, exist_ok=True)
+HARMONICS_RESOURCE_DIR = provider_resource_root("harmonics")
 
 from .math import (
     bn,
@@ -22,7 +21,7 @@ from .math import (
 )
 
 __all__ = [
-    "RAFAELY_SOURCE_ROOT",
+    "HARMONICS_RESOURCE_DIR",
     "bn",
     "bn_mat",
     "c2s",

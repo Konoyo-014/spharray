@@ -15,7 +15,7 @@ def beam_weights_cardioid(order: int) -> np.ndarray:
 
 
 def beam_weights_hypercardioid(order: int) -> np.ndarray:
-    """Maximum DI axisymmetric weights (Rafaely/Politis-style hypercardioid)."""
+    """Maximum DI axisymmetric weights (Harmonics/Spatial-style hypercardioid)."""
     return np.array([(2 * n + 1) / (order + 1) ** 2 for n in range(order + 1)], dtype=float)
 
 

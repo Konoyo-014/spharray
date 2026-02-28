@@ -22,7 +22,7 @@ def _basis_from_cov(cov: np.ndarray) -> SHBasisSpec:
 
 
 def sphPWDmap(sph_cov: ArrayLike, grid_dirs_rad: ArrayLike, n_src: int = 1):
-    """Politis MATLAB-compatible PWD steered-response map."""
+    """Spatial MATLAB-compatible PWD steered-response map."""
     cov = np.asarray(sph_cov, dtype=np.complex128)
     grid_dirs = np.asarray(grid_dirs_rad, dtype=float)
     n_sh = cov.shape[0]
@@ -107,7 +107,7 @@ def getDiffuseness_DPV(sh_cov: ArrayLike) -> float:
     basis = _basis_from_cov(cov)
     order = basis.max_order
     grid = get_tdesign_fallback(order=4 * max(order, 1), n_points=max(64, 4 * (order + 1) ** 2))
-    # Politis code uses az/elev grid; our fallback grid is az/colat
+    # Spatial code uses az/elev grid; our fallback grid is az/colat
     y_grid = np.asarray(sh_matrix(SHBasisSpec(max_order=order, basis="real"), grid))  # [G, C]
     a_grid = ((4 * np.pi) / (order + 1) ** 2) * y_grid
     p_grid = np.real(np.einsum("gi,ij,gj->g", a_grid, cov, a_grid))
@@ -132,7 +132,7 @@ def sparse_solver_irls(
     termination_value: float,
     max_iterations: int = 0,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """IRLS sparse solver in the style of Politis `sparse_solver_irls`."""
+    """IRLS sparse solver in the style of Spatial `sparse_solver_irls`."""
     A = np.asarray(A, dtype=np.complex128)
     Y = np.asarray(Y, dtype=np.complex128)
     n_chan, n_dict = A.shape
@@ -210,7 +210,7 @@ def sphIntensityHist(i_xyz: ArrayLike, grid_dirs_rad: ArrayLike, nSrc: int = 1):
 
 
 def sphiPMMW(Phi_x: ArrayLike, Phi_n: ArrayLike, src_dirs_rad: ArrayLike):
-    """Pythonic implementation of Politis SHD iPMMW beamformer weights."""
+    """Pythonic implementation of Spatial SHD iPMMW beamformer weights."""
     Phi_x = np.asarray(Phi_x, dtype=np.complex128)
     Phi_n = np.asarray(Phi_n, dtype=np.complex128)
     src_dirs = np.asarray(src_dirs_rad, dtype=float)
@@ -260,7 +260,7 @@ def sphiPMMW(Phi_x: ArrayLike, Phi_n: ArrayLike, src_dirs_rad: ArrayLike):
 
 
 def sphESPRIT(Us: ArrayLike) -> np.ndarray:
-    """Spherical ESPRIT DoA estimation (translated from Politis MATLAB implementation)."""
+    """Spherical ESPRIT DoA estimation (translated from Spatial MATLAB implementation)."""
     Us = np.asarray(Us, dtype=np.complex128)
     LambdaXYp, LambdaXYm, LambdaZ = _esprit_getLambda(Us)
     PsiXYp, PsiXYm, PsiZ = _esprit_getPsi(Us, LambdaXYp, LambdaXYm, LambdaZ)

@@ -104,7 +104,7 @@ class SpatialSpectrumResult:
 
 
 @dataclass
-class FigureReproConfig:
+class FigureStyleConfig:
     dpi: int = 150
     figsize: tuple[float, float] = (8.0, 6.0)
     font_family: str = "DejaVu Sans"

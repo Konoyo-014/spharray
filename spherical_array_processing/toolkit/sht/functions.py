@@ -19,7 +19,7 @@ from ...sh import (
     replicate_per_order,
 )
 from ...types import SHBasisSpec, SphericalGrid
-from ..politis import (
+from ..spatial import (
     checkCondNumberSHT,
     conjCoeffs,
     gaunt_mtx,
@@ -28,10 +28,10 @@ from ..politis import (
     rotateAxisCoeffs,
     unitSph2cart,
 )
-from ..rafaely.math import wigner_d_matrix
-from .._reference_paths import provider_reference_root
+from ..harmonics.math import wigner_d_matrix
+from .._resource_paths import provider_resource_root
 
-_FLIEGE_MAT = provider_reference_root("sht") / "fliegeMaierNodes_1_30.mat"
+_FLIEGE_MAT = provider_resource_root("sht") / "fliegeMaierNodes_1_30.mat"
 
 
 def grid2dirs(aziRes: float, polarRes: float, POLAR_OR_ELEV: int = 1, ZEROED_OR_CENTERED: int = 1) -> np.ndarray:
@@ -370,7 +370,7 @@ def getFliegeNodes(index: int):
         weights = np.asarray(nodes[:, 3], dtype=float)
         return vecs, dirs, weights
 
-    # Deterministic fallback when optional Fliege reference assets are unavailable.
+    # Deterministic fallback when optional Fliege resource files are unavailable.
     n_points = max(12, 2 * i * i)
     grid = get_tdesign_fallback(order=max(1, i - 1), n_points=n_points)
     vecs = unit_sph_to_cart(grid.azimuth, grid.angle2, convention=grid.convention)

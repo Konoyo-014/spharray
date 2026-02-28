@@ -15,7 +15,7 @@ from ...types import SHBasisSpec, SphericalGrid
 
 
 def sh2(order: int, theta: ArrayLike, phi: ArrayLike) -> np.ndarray:
-    """Rafaely MATLAB-compatible complex SH matrix with rows=(N+1)^2, cols=L.
+    """Harmonics MATLAB-compatible complex SH matrix with rows=(N+1)^2, cols=L.
 
     This follows the original `sh2.m` construction exactly (including
     coefficient ordering and negative-order construction).
@@ -66,7 +66,7 @@ def legendre_coefficients(order: int) -> np.ndarray:
 
 
 def wigner_d_matrix(order: int, alpha: float, beta: float, gamma: float) -> np.ndarray:
-    """Rafaely-style Wigner-D block matrix up to order N in ACN ordering."""
+    """Harmonics-style Wigner-D block matrix up to order N in ACN ordering."""
     size = (order + 1) ** 2
     dmat = np.zeros((size, size), dtype=np.complex128)
     for n in range(order + 1):
@@ -122,7 +122,7 @@ def derivative_th(vnm: ArrayLike, th: float, ph: float) -> np.ndarray:
 
 
 def c2s(x: ArrayLike, y: ArrayLike, z: ArrayLike) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    # Rafaely names: theta=colatitude, phi=azimuth
+    # Harmonics names: theta=colatitude, phi=azimuth
     phi, theta, r = cart_to_sph(x, y, z, convention="az_colat")
     return theta, phi, r
 
@@ -132,7 +132,7 @@ def s2c(theta: ArrayLike, phi: ArrayLike, r: ArrayLike) -> tuple[np.ndarray, np.
 
 
 def equiangle_sampling(order: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Rafaely-compatible equal-angle grid and weights.
+    """Harmonics-compatible equal-angle grid and weights.
 
     Returns `(a, th, ph)` where `th` is colatitude and `ph` is azimuth.
     """

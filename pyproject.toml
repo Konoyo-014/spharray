@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spherical-array-processing"
-version = "0.1.0"
-description = "Pythonic spherical array processing toolkit with Politis/Rafaely-inspired functionality"
+version = "0.2.0"
+description = "Self-contained Python toolkit for spherical array processing"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"

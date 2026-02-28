@@ -2,7 +2,7 @@
 
 from .types import (
     ArrayGeometry,
-    FigureReproConfig,
+    FigureStyleConfig,
     SHBasisSpec,
     SHCovariance,
     SHSignalFrame,
@@ -12,11 +12,10 @@ from .types import (
 
 __all__ = [
     "ArrayGeometry",
-    "FigureReproConfig",
+    "FigureStyleConfig",
     "SHBasisSpec",
     "SHCovariance",
     "SHSignalFrame",
     "SpatialSpectrumResult",
     "SphericalGrid",
 ]
-

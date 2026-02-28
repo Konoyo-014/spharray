@@ -4,11 +4,11 @@ from contextlib import contextmanager
 
 import matplotlib as mpl
 
-from ..types import FigureReproConfig
+from ..types import FigureStyleConfig
 
 
-def apply_matlab_like_style(config: FigureReproConfig | None = None) -> None:
-    cfg = config or FigureReproConfig()
+def apply_matlab_like_style(config: FigureStyleConfig | None = None) -> None:
+    cfg = config or FigureStyleConfig()
     mpl.rcParams.update(
         {
             "figure.dpi": cfg.dpi,
@@ -25,11 +25,10 @@ def apply_matlab_like_style(config: FigureReproConfig | None = None) -> None:
 
 
 @contextmanager
-def figure_repro_context(config: FigureReproConfig | None = None):
+def figure_style_context(config: FigureStyleConfig | None = None):
     old = mpl.rcParams.copy()
     apply_matlab_like_style(config)
     try:
         yield
     finally:
         mpl.rcParams.update(old)
-

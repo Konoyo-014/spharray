@@ -33,11 +33,10 @@ jobs:
           pip install --force-reinstall dist/*.whl
           python - <<'PY'
           import spherical_array_processing as sap
-          from spherical_array_processing.repro import politis, rafaely, sht
-          assert politis.POLITIS_SOURCE_ROOT.exists()
-          assert rafaely.RAFAELY_SOURCE_ROOT.exists()
+          from spherical_array_processing.toolkit import spatial, harmonics, sht
+          assert spatial.SPATIAL_RESOURCE_DIR.exists()
+          assert harmonics.HARMONICS_RESOURCE_DIR.exists()
           vecs, dirs, weights = sht.getFliegeNodes(3)
           assert vecs.shape[1] == 3 and dirs.shape[1] == 2 and weights.ndim == 1
           print("wheel smoke ok")
           PY
-

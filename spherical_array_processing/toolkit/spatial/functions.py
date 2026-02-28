@@ -23,10 +23,10 @@ from ...coords import azel_to_az_colat, cart_to_sph, unit_sph_to_cart
 from ...sh import complex_to_real_coeffs, direct_sht, matrix as sh_matrix, real_to_complex_coeffs
 from ...sh import replicate_per_order
 from ...types import SHBasisSpec, SphericalGrid
-from .._reference_paths import provider_reference_root
+from .._resource_paths import provider_resource_root
 
 
-_SHT_DESIGNS_MAT = provider_reference_root("sht") / "t_designs_1_21.mat"
+_SHT_DESIGNS_MAT = provider_resource_root("sht") / "t_designs_1_21.mat"
 
 
 def sorted_eig(x: ArrayLike, direction: str = "descend") -> tuple[np.ndarray, np.ndarray]:
@@ -148,7 +148,7 @@ def default_eigenmike_like_dirs() -> np.ndarray:
 
 
 def beam_weights_cardioid_to_spherical(order: int) -> np.ndarray:
-    # Exact closed-form from Politis `beamWeightsCardioid2Spherical.m`.
+    # Exact closed-form from Spatial `beamWeightsCardioid2Spherical.m`.
     b_n = np.zeros(order + 1, dtype=float)
     for n in range(order + 1):
         b_n[n] = (
@@ -225,7 +225,7 @@ def beamWeightsPressureVelocity(basisType: str = "real") -> np.ndarray:
 
 
 def differentialGains() -> dict[str, dict[int, np.ndarray]]:
-    """Tabulated differential-form coefficients from Politis `differentialGains.m` script."""
+    """Tabulated differential-form coefficients from Spatial `differentialGains.m` script."""
     cardioid = {
         1: np.array([1 / 2, 1 / 2], dtype=float),
         2: np.array([1 / 4, 2 / 4, 1 / 4], dtype=float),
@@ -545,7 +545,7 @@ def diffCoherence(
 
 
 def computeVelCoeffsMtx(sectorOrder: int) -> np.ndarray:
-    """Numerical projection version of Politis `computeVelCoeffsMtx`.
+    """Numerical projection version of Spatial `computeVelCoeffsMtx`.
 
     Returns complex SH conversion matrices A_xyz with shape [C_out, C_in, 3].
     """
@@ -658,7 +658,7 @@ def getTdesign(degree: int) -> tuple[np.ndarray, np.ndarray]:
     degree = int(degree)
     if degree < 1:
         raise ValueError("degree must be at least 1")
-    use_mat = os.environ.get("SAP_USE_REFERENCE_MAT", "").strip().lower() in {"1", "true", "yes", "on"}
+    use_mat = os.environ.get("SAP_USE_RESOURCE_MAT", "").strip().lower() in {"1", "true", "yes", "on"}
     if use_mat and _SHT_DESIGNS_MAT.exists() and degree <= 21:
         data = loadmat(_SHT_DESIGNS_MAT)
         t_cell = data["t_designs"]
@@ -820,7 +820,7 @@ def arraySHTfiltersTheory_regLS(
     fs: float,
     amp_threshold_db: float,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Approximate Politis regLS encoding filter design.
+    """Approximate Spatial regLS encoding filter design.
 
     This implementation preserves the main interface and regularized LS structure,
     while using the local SH/radial model in place of the original external MATLAB dependencies.

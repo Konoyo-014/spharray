@@ -34,7 +34,7 @@ def besselhsd(n: int | ArrayLike, x: ArrayLike) -> NDArray[np.complex128]:
 
 
 def plane_wave_radial_bn(n: int, kr: ArrayLike, ka: ArrayLike | None = None, sphere: int | str = 1) -> NDArray[np.complex128]:
-    """Rafaely-style Bn radial function.
+    """Harmonics-style Bn radial function.
 
     `sphere`: 0/'open', 1/'rigid', 2/'cardioid'
     """

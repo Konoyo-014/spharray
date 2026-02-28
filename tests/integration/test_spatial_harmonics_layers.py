@@ -4,7 +4,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from spherical_array_processing.repro.politis import (
+from spherical_array_processing.toolkit.spatial import (
     arraySHTfiltersTheory_radInverse,
     arraySHTfiltersTheory_regLS,
     arraySHTfiltersTheory_softLim,
@@ -55,15 +55,15 @@ from spherical_array_processing.repro.politis import (
     sph_array_noise,
     sph_array_noise_threshold,
 )
-from spherical_array_processing.repro.rafaely import (
+from spherical_array_processing.toolkit.harmonics import (
     chebyshev_coefficients,
     derivative_ph,
-    equiangle_sampling as rafaely_equiangle_sampling,
-    gaussian_sampling as rafaely_gaussian_sampling,
+    equiangle_sampling as harmonics_equiangle_sampling,
+    gaussian_sampling as harmonics_gaussian_sampling,
     legendre_coefficients,
     platonic_solid,
     sh2,
-    uniform_sampling as rafaely_uniform_sampling,
+    uniform_sampling as harmonics_uniform_sampling,
     wigner_d_matrix,
 )
 
@@ -76,7 +76,7 @@ def test_sorted_eig_descend():
     assert v.shape == (3, 3)
 
 
-def test_politis_noise_functions_shapes():
+def test_spatial_noise_functions_shapes():
     f = np.linspace(100, 1000, 8)
     g2, g2_lin = sph_array_noise(0.042, 32, 3, "rigid", f)
     th = sph_array_noise_threshold(0.042, 32, 10.0, 3, "rigid")
@@ -85,7 +85,7 @@ def test_politis_noise_functions_shapes():
     assert th.shape == (3,)
 
 
-def test_politis_alias_limit_outputs():
+def test_spatial_alias_limit_outputs():
     dirs = np.stack([np.linspace(0, 2 * np.pi, 32, endpoint=False), np.zeros(32)], axis=1)
     f_alias, cond = sph_array_alias_lim(0.042, 32, 4, dirs)
     assert f_alias.shape == (3,)
@@ -99,7 +99,7 @@ def test_differential_to_spherical_conversion_runs():
     assert np.isfinite(b).all()
 
 
-def test_rafaely_math_shapes():
+def test_harmonics_math_shapes():
     th = np.array([0.1, 0.2, -0.3])
     ph = np.array([0.2, -0.4, 0.7])
     y = sh2(2, th, ph)
@@ -108,9 +108,9 @@ def test_rafaely_math_shapes():
     assert d.shape == (9,)
     w = wigner_d_matrix(2, 0.1, 0.2, 0.3)
     assert w.shape == (9, 9)
-    a1, th1, ph1 = rafaely_equiangle_sampling(2)
-    a2, th2, ph2 = rafaely_gaussian_sampling(2)
-    a3, th3, ph3 = rafaely_uniform_sampling(2)
+    a1, th1, ph1 = harmonics_equiangle_sampling(2)
+    a2, th2, ph2 = harmonics_gaussian_sampling(2)
+    a3, th3, ph3 = harmonics_uniform_sampling(2)
     assert a1.shape == th1.shape == ph1.shape
     assert a2.shape == th2.shape == ph2.shape
     assert a3.shape == th3.shape == ph3.shape
@@ -132,7 +132,7 @@ def test_platonic_solid_radius():
     assert f.ndim == 2
 
 
-def test_politis_wrapper_doa_and_diffuseness_interfaces():
+def test_spatial_wrapper_doa_and_diffuseness_interfaces():
     order = 1
     n = (order + 1) ** 2
     cov = np.eye(n, dtype=complex)
@@ -160,7 +160,7 @@ def test_politis_wrapper_doa_and_diffuseness_interfaces():
     assert 0.0 <= getDiffuseness_DPV(cov) <= 1.0
 
 
-def test_politis_nullformers_and_pv_matrix():
+def test_spatial_nullformers_and_pv_matrix():
     w_pwd = sphNullformer_pwd(1, np.array([[0.0, 0.0], [np.pi / 2, 0.0]]))
     w_diff = sphNullformer_diff(1, np.array([[0.0, 0.0]]))
     m_real = beam_weights_pressure_velocity("real")
@@ -171,7 +171,7 @@ def test_politis_nullformers_and_pv_matrix():
     assert m_cplx.shape == (4, 4)
 
 
-def test_politis_diffcoh_and_encoding_filters_shapes():
+def test_spatial_diffcoh_and_encoding_filters_shapes():
     # synthetic array response [bins,mics,grid]
     H = np.ones((5, 4, 10), dtype=np.complex128)
     d_meas = getDiffCohMtxMeas(H)
@@ -201,7 +201,7 @@ def test_politis_diffcoh_and_encoding_filters_shapes():
     assert h_diffeq.shape == h_mreg_f.shape
 
 
-def test_politis_sparse_recovery_wrappers():
+def test_spatial_sparse_recovery_wrappers():
     rng = np.random.default_rng(0)
     M, K, T = 4, 12, 6
     A = rng.normal(size=(M, K))
@@ -229,7 +229,7 @@ def test_politis_sparse_recovery_wrappers():
     assert Ps_est.shape == (2,)
 
 
-def test_politis_more_weight_and_eval_helpers():
+def test_spatial_more_weight_and_eval_helpers():
     d = beamWeightsDolphChebyshev2Spherical(2, "sidelobe", 0.1)
     b_lin = beamWeightsLinear2Spherical(np.array([1.0, 0.5, 0.25]))
     b_fun = beamWeightsFromFunction(lambda az, el: np.ones_like(az), order=1)
@@ -250,7 +250,7 @@ def test_politis_more_weight_and_eval_helpers():
     assert wng.shape == (n_bins, 1)
 
 
-def test_politis_poly_axisym_helpers():
+def test_spatial_poly_axisym_helpers():
     tc = returnChebyPolyCoeffs(3)
     lc = returnLegePolyCoeffs(3)
     assert tc.shape == (4, 1)
@@ -265,7 +265,7 @@ def test_politis_poly_axisym_helpers():
     plt.close(ax.figure)
 
 
-def test_politis_remaining_aliases_and_numerical_helpers():
+def test_spatial_remaining_aliases_and_numerical_helpers():
     a = beamWeightsCardioid2Differential(2)
     b = beamWeightsCardioid2Spherical(2)
     c = beamWeightsDifferential2Spherical(a)
@@ -296,7 +296,7 @@ def test_politis_remaining_aliases_and_numerical_helpers():
     assert dirs.shape == (2, 2)
 
 
-def test_politis_differential_gains_table():
+def test_spatial_differential_gains_table():
     gains = differentialGains()
     assert set(gains.keys()) == {"cardioid", "supercardioid", "hypercardioid"}
     for family, table in gains.items():
