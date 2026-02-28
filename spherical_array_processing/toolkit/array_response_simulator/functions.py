@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.toolkit.array_response_simulator.functions import <symbol>
+"""
+
 from __future__ import annotations
 
 from typing import Any
@@ -17,6 +23,16 @@ from ...coords import unit_sph_to_cart
 
 
 def sph_besselj(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sph besselj.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.asarray(x, dtype=float)
     out = np.sqrt(np.pi / (2 * np.where(x == 0, 1.0, x))) * jv(n + 0.5, x)
     out = out.astype(np.complex128)
@@ -28,37 +44,117 @@ def sph_besselj(n: int, x: ArrayLike) -> np.ndarray:
 
 
 def sph_bessely(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sph bessely.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.asarray(x, dtype=float)
     return np.sqrt(np.pi / (2 * x)) * yv(n + 0.5, x)
 
 
 def sph_hankel1(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sph hankel1.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     return sph_besselj(n, x) + 1j * sph_bessely(n, x)
 
 
 def sph_hankel2(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sph hankel2.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     return sph_besselj(n, x) - 1j * sph_bessely(n, x)
 
 
 def dsph_besselj(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run dsph besselj.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.asarray(x, dtype=float)
     return (n * sph_besselj(n - 1, x) - (n + 1) * sph_besselj(n + 1, x)) / (2 * n + 1)
 
 
 def dsph_bessely(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run dsph bessely.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.asarray(x, dtype=float)
     return (n * sph_bessely(n - 1, x) - (n + 1) * sph_bessely(n + 1, x)) / (2 * n + 1)
 
 
 def dsph_hankel1(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run dsph hankel1.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     return dsph_besselj(n, x) + 1j * dsph_bessely(n, x)
 
 
 def dsph_hankel2(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run dsph hankel2.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     return dsph_besselj(n, x) - 1j * dsph_bessely(n, x)
 
 
 def dbesselj(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run dbesselj.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.asarray(x, dtype=float)
     if n == 0:
         return -jv(1, x)
@@ -66,6 +162,16 @@ def dbesselj(n: int, x: ArrayLike) -> np.ndarray:
 
 
 def dbessely(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run dbessely.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.asarray(x, dtype=float)
     if n == 0:
         return -yv(1, x)
@@ -73,14 +179,45 @@ def dbessely(n: int, x: ArrayLike) -> np.ndarray:
 
 
 def dhankel1(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run dhankel1.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     return dbesselj(n, x) + 1j * dbessely(n, x)
 
 
 def dhankel2(n: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run dhankel2.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     return dbesselj(n, x) - 1j * dbessely(n, x)
 
 
 def sph_function(n: int, x: ArrayLike, funcName: str) -> np.ndarray:
+    """Usage:
+        Run sph function.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+        funcName: str.
+    
+    Returns:
+        np.ndarray.
+    """
     fn = str(funcName)
     if fn == "besselj":
         return sph_besselj(n, x)
@@ -94,6 +231,17 @@ def sph_function(n: int, x: ArrayLike, funcName: str) -> np.ndarray:
 
 
 def dsph_function(n: int, x: ArrayLike, funcName: str) -> np.ndarray:
+    """Usage:
+        Run dsph function.
+    
+    Args:
+        n: int.
+        x: ArrayLike.
+        funcName: str.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.asarray(x, dtype=float)
     fn = str(funcName)
     if fn == "besselj":
@@ -108,6 +256,18 @@ def dsph_function(n: int, x: ArrayLike, funcName: str) -> np.ndarray:
 
 
 def sphModalCoeffs(N: int, kr: ArrayLike, arrayType: str, dirCoeff: float | None = None) -> np.ndarray:
+    """Usage:
+        Run sphModalCoeffs.
+    
+    Args:
+        N: int.
+        kr: ArrayLike.
+        arrayType: str.
+        dirCoeff: float | None, default=None.
+    
+    Returns:
+        np.ndarray.
+    """
     kr_arr = np.asarray(kr, dtype=float).reshape(-1)
     if arrayType in ("open", "rigid"):
         return sph_modal_coeffs(int(N), kr_arr, array_type=arrayType)
@@ -124,6 +284,17 @@ def sphModalCoeffs(N: int, kr: ArrayLike, arrayType: str, dirCoeff: float | None
 
 
 def cylModalCoeffs(N: int, kr: ArrayLike, arrayType: str) -> np.ndarray:
+    """Usage:
+        Run cylModalCoeffs.
+    
+    Args:
+        N: int.
+        kr: ArrayLike.
+        arrayType: str.
+    
+    Returns:
+        np.ndarray.
+    """
     kr_arr = np.asarray(kr, dtype=float).reshape(-1)
     out = np.zeros((kr_arr.size, int(N) + 1), dtype=np.complex128)
     for n in range(int(N) + 1):
@@ -153,6 +324,22 @@ def simulateSphArray(
     fs: float,
     dirCoeff: float | None = None,
 ):
+    """Usage:
+        Run simulateSphArray.
+    
+    Args:
+        N_filt: int.
+        mic_dirs_rad: ArrayLike.
+        src_dirs_rad: ArrayLike.
+        arrayType: str.
+        R: float.
+        N_order: int.
+        fs: float.
+        dirCoeff: float | None, default=None.
+    
+    Returns:
+        value.
+    """
     f = np.arange(N_filt // 2 + 1, dtype=float) * fs / N_filt
     c = 343.0
     kR = 2 * np.pi * f * R / c
@@ -184,6 +371,20 @@ def simulateSphArray(
 
 
 def sphericalScatterer(mic_dirs_rad: ArrayLike, src_dirs_rad: ArrayLike, R: float, N_order: int, N_filt: int, fs: float):
+    """Usage:
+        Run sphericalScatterer.
+    
+    Args:
+        mic_dirs_rad: ArrayLike.
+        src_dirs_rad: ArrayLike.
+        R: float.
+        N_order: int.
+        N_filt: int.
+        fs: float.
+    
+    Returns:
+        value.
+    """
     f = np.arange(N_filt // 2 + 1, dtype=float) * fs / N_filt
     c = 343.0
     kR = 2 * np.pi * f * R / c
@@ -250,6 +451,20 @@ def getArrayResponse(
     Lfilt: int,
     fs: float = 48000.0,
 ):
+    """Usage:
+        Run getArrayResponse.
+    
+    Args:
+        U_doa: ArrayLike.
+        R_mic: ArrayLike.
+        U_orient: ArrayLike | None.
+        fDir_handle: Any.
+        Lfilt: int.
+        fs: float, default=48000.0.
+    
+    Returns:
+        value.
+    """
     u_doa = np.asarray(U_doa, dtype=float)
     r_mic = np.asarray(R_mic, dtype=float)
     if u_doa.shape[1] != 3 or r_mic.shape[1] != 3:
@@ -309,6 +524,21 @@ def getArrayResponse(
 
 
 def simulateCylArray(N_filt: int, mic_dirs_rad: ArrayLike, src_dirs_rad: ArrayLike, arrayType: str, R: float, N_order: int, fs: float):
+    """Usage:
+        Run simulateCylArray.
+    
+    Args:
+        N_filt: int.
+        mic_dirs_rad: ArrayLike.
+        src_dirs_rad: ArrayLike.
+        arrayType: str.
+        R: float.
+        N_order: int.
+        fs: float.
+    
+    Returns:
+        value.
+    """
     f = np.arange(N_filt // 2 + 1, dtype=float) * fs / N_filt
     c = 343.0
     kR = 2 * np.pi * f * R / c
@@ -335,6 +565,20 @@ def simulateCylArray(N_filt: int, mic_dirs_rad: ArrayLike, src_dirs_rad: ArrayLi
 
 
 def cylindricalScatterer(mic_dirs_rad: ArrayLike, src_azis_rad: ArrayLike, R: float, N_order: int, N_filt: int, fs: float):
+    """Usage:
+        Run cylindricalScatterer.
+    
+    Args:
+        mic_dirs_rad: ArrayLike.
+        src_azis_rad: ArrayLike.
+        R: float.
+        N_order: int.
+        N_filt: int.
+        fs: float.
+    
+    Returns:
+        value.
+    """
     f = np.arange(N_filt // 2 + 1, dtype=float) * fs / N_filt
     c = 343.0
     kR = 2 * np.pi * f * R / c

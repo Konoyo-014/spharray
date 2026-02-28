@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.sh.transforms import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np

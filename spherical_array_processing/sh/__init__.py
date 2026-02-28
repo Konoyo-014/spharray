@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.sh import <symbol>
+"""
+
 from .basis import (
     acn_index,
     complex_matrix,

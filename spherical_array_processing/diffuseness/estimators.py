@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.diffuseness.estimators import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -15,6 +21,15 @@ def intensity_vectors_from_foa(foa: ArrayLike) -> np.ndarray:
 
 
 def diffuseness_ie(pv_cov: ArrayLike) -> float:
+    """Usage:
+        Run diffuseness ie.
+    
+    Args:
+        pv_cov: ArrayLike.
+    
+    Returns:
+        float.
+    """
     c = np.asarray(pv_cov, dtype=np.complex128)
     if c.shape[0] < 4 or c.shape[1] < 4:
         raise ValueError("pv_cov must be at least 4x4")
@@ -27,6 +42,15 @@ def diffuseness_ie(pv_cov: ArrayLike) -> float:
 
 
 def diffuseness_tv(i_vecs: ArrayLike) -> float:
+    """Usage:
+        Run diffuseness tv.
+    
+    Args:
+        i_vecs: ArrayLike.
+    
+    Returns:
+        float.
+    """
     i = np.asarray(i_vecs, dtype=float)
     if i.ndim != 2 or i.shape[1] != 3:
         raise ValueError("i_vecs must be [T,3]")
@@ -40,6 +64,15 @@ def diffuseness_tv(i_vecs: ArrayLike) -> float:
 
 
 def diffuseness_sv(i_vecs: ArrayLike) -> float:
+    """Usage:
+        Run diffuseness sv.
+    
+    Args:
+        i_vecs: ArrayLike.
+    
+    Returns:
+        float.
+    """
     i = np.asarray(i_vecs, dtype=float)
     if i.ndim != 2 or i.shape[1] != 3:
         raise ValueError("i_vecs must be [T,3]")
@@ -52,6 +85,15 @@ def diffuseness_sv(i_vecs: ArrayLike) -> float:
 
 
 def diffuseness_cmd(sh_cov: ArrayLike) -> tuple[float, np.ndarray]:
+    """Usage:
+        Run diffuseness cmd.
+    
+    Args:
+        sh_cov: ArrayLike.
+    
+    Returns:
+        tuple[float, np.ndarray].
+    """
     c = np.asarray(sh_cov, dtype=np.complex128)
     if c.ndim != 2 or c.shape[0] != c.shape[1]:
         raise ValueError("sh_cov must be square")
@@ -61,6 +103,16 @@ def diffuseness_cmd(sh_cov: ArrayLike) -> tuple[float, np.ndarray]:
         raise ValueError("sh_cov size does not correspond to SH order")
 
     def _cmd_from_cov(cov: np.ndarray, n: int) -> float:
+        """Usage:
+            Run cmd from cov.
+        
+        Args:
+            cov: np.ndarray.
+            n: int.
+        
+        Returns:
+            float.
+        """
         eigvals = np.real(np.linalg.eigvals(cov))
         mean_ev = np.sum(eigvals) / ((n + 1) ** 2)
         if abs(mean_ev) <= 1e-12:

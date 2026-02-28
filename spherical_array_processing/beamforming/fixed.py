@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.beamforming.fixed import <symbol>
+"""
+
 from __future__ import annotations
 
 import math
@@ -28,6 +34,15 @@ _SUPERCARDIOID_TABLE = {
 
 
 def beam_weights_supercardioid(order: int) -> np.ndarray:
+    """Usage:
+        Run beam weights supercardioid.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     if order in _SUPERCARDIOID_TABLE:
         return _SUPERCARDIOID_TABLE[order].copy()
     # Fallback: numerically optimize front/back ratio surrogate under unit front gain.
@@ -36,12 +51,31 @@ def beam_weights_supercardioid(order: int) -> np.ndarray:
 
 def beam_weights_maxev(order: int) -> np.ndarray:
     # Practical approximation via energy-vector preserving taper.
+    """Usage:
+        Run beam weights maxev.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     n = np.arange(order + 1, dtype=float)
     w = (2 * n + 1) * np.cos(np.pi * n / (2 * (order + 1))) ** 2
     return w / np.sum(w)
 
 
 def axisymmetric_pattern(theta: ArrayLike, b_n: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run axisymmetric pattern.
+    
+    Args:
+        theta: ArrayLike.
+        b_n: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     theta = np.asarray(theta, dtype=float)
     b = np.asarray(b_n, dtype=float).reshape(-1)
     x = np.cos(theta)
@@ -52,6 +86,17 @@ def axisymmetric_pattern(theta: ArrayLike, b_n: ArrayLike) -> np.ndarray:
 
 
 def _legendre_fit_axisymmetric(x: np.ndarray, target: np.ndarray, order: int) -> np.ndarray:
+    """Usage:
+        Run legendre fit axisymmetric.
+    
+    Args:
+        x: np.ndarray.
+        target: np.ndarray.
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     a = np.stack([((2 * n + 1) / (4 * np.pi)) * eval_legendre(n, x) for n in range(order + 1)], axis=1)
     b, *_ = np.linalg.lstsq(a, target, rcond=None)
     front_gain = sum(b[n] * ((2 * n + 1) / (4 * np.pi)) for n in range(order + 1))
@@ -61,6 +106,15 @@ def _legendre_fit_axisymmetric(x: np.ndarray, target: np.ndarray, order: int) ->
 
 
 def _design_supercardioid_fallback(order: int) -> np.ndarray:
+    """Usage:
+        Run design supercardioid fallback.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.linspace(-1.0, 1.0, 8193)
     target = np.exp(4.0 * (x - 1.0))  # narrow forward lobe surrogate
     b = _legendre_fit_axisymmetric(x, target, order)

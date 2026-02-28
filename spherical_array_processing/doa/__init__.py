@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.doa import <symbol>
+"""
+
 from .spectra import music_spectrum, peak_pick_spectrum, pwd_spectrum, spatial_spectrum_from_map
 
 __all__ = [

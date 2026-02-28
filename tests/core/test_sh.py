@@ -1,3 +1,9 @@
+"""Test module.
+
+Usage:
+    pytest -q tests/core/test_sh.py
+"""
+
 import numpy as np
 
 from spherical_array_processing.array.sampling import get_tdesign_fallback
@@ -11,11 +17,23 @@ from spherical_array_processing.types import SHBasisSpec
 
 
 def test_replicate_per_order():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     x = replicate_per_order([1, 2, 3])
     assert x.tolist() == [1, 2, 2, 2, 3, 3, 3, 3, 3]
 
 
 def test_real_complex_coeff_roundtrip():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     n = 3
     rng = np.random.default_rng(0)
     # Build complex SH coefficients corresponding to a real-valued function:
@@ -35,6 +53,12 @@ def test_real_complex_coeff_roundtrip():
 
 
 def test_real_sh_matrix_shape_and_finite():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     grid = get_tdesign_fallback(order=3, n_points=64)
     y = matrix(SHBasisSpec(max_order=3, basis="real"), grid)
     assert y.shape == (64, 16)

@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.acoustics import <symbol>
+"""
+
 from .radial import (
     bn_matrix,
     besselhs,

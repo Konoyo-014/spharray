@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.diffuseness import <symbol>
+"""
+
 from .estimators import (
     diffuseness_cmd,
     diffuseness_ie,

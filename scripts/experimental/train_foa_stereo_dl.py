@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""Executable helper script.
+
+Usage:
+    python scripts/experimental/train_foa_stereo_dl.py
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -10,6 +16,16 @@ import numpy as np
 
 def _make_synthetic_dataset(n_samples: int, rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]:
     # Features roughly mimic [Re(mid), Im(mid), Re(side), Im(side), ipd, ild, |mid|, |side|]
+    """Usage:
+        Run make synthetic dataset.
+    
+    Args:
+        n_samples: int.
+        rng: np.random.Generator.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     x = rng.normal(size=(n_samples, 8))
     x[:, 4] = np.tanh(x[:, 4]) * np.pi  # ipd
     x[:, 5] = np.tanh(x[:, 5]) * 3.0  # ild
@@ -37,6 +53,17 @@ def _make_synthetic_dataset(n_samples: int, rng: np.random.Generator) -> tuple[n
 
 
 def _fit_ridge(x: np.ndarray, y: np.ndarray, alpha: float) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run fit ridge.
+    
+    Args:
+        x: np.ndarray.
+        y: np.ndarray.
+        alpha: float.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     x_mean = x.mean(axis=0, keepdims=True)
     y_mean = y.mean(axis=0, keepdims=True)
     xc = x - x_mean
@@ -48,6 +75,17 @@ def _fit_ridge(x: np.ndarray, y: np.ndarray, alpha: float) -> tuple[np.ndarray, 
 
 
 def _evaluate(y_true: np.ndarray, y_pred: np.ndarray, eps: float = 1e-9) -> dict[str, float]:
+    """Usage:
+        Run evaluate.
+    
+    Args:
+        y_true: np.ndarray.
+        y_pred: np.ndarray.
+        eps: float, default=1e-09.
+    
+    Returns:
+        dict[str, float].
+    """
     err = y_pred - y_true
     mae = float(np.mean(np.abs(err)))
     rmse = float(np.sqrt(np.mean(err**2)))
@@ -71,6 +109,15 @@ def _evaluate(y_true: np.ndarray, y_pred: np.ndarray, eps: float = 1e-9) -> dict
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Usage:
+        Run main.
+    
+    Args:
+        argv: list[str] | None, default=None.
+    
+    Returns:
+        int.
+    """
     parser = argparse.ArgumentParser(description="Train a lightweight linear stereo->FOA DL checkpoint.")
     parser.add_argument("--output", type=Path, default=Path("artifacts/foa_dl/linear_checkpoint.npz"))
     parser.add_argument("--metrics-output", type=Path, default=Path("artifacts/foa_dl/train_metrics.json"))
@@ -107,4 +154,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

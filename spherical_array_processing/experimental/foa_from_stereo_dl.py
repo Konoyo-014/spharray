@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.experimental.foa_from_stereo_dl import <symbol>
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -12,6 +18,9 @@ from .foa_from_stereo import FOAEstimate, StereoFOAConfig, estimate_incomplete_f
 
 @dataclass
 class StereoFOADLConfig:
+    """Usage:
+        Instantiate `StereoFOADLConfig` to work with StereoFOADLConfig.
+    """
     model_name: str = "linear_stft"
     feature_set: str = "mid_side_ipd_ild"
     checkpoint_path: str | None = None
@@ -24,6 +33,16 @@ class StereoFOADLConfig:
 
 
 def _extract_features(zl: np.ndarray, zr: np.ndarray) -> tuple[np.ndarray, dict[str, np.ndarray]]:
+    """Usage:
+        Run extract features.
+    
+    Args:
+        zl: np.ndarray.
+        zr: np.ndarray.
+    
+    Returns:
+        tuple[np.ndarray, dict[str, np.ndarray]].
+    """
     mid = 0.5 * (zl + zr)
     side = 0.5 * (zl - zr)
     ipd = np.angle(zl * np.conj(zr))
@@ -46,6 +65,15 @@ def _extract_features(zl: np.ndarray, zr: np.ndarray) -> tuple[np.ndarray, dict[
 
 
 def _load_linear_checkpoint(path: str | None) -> dict[str, np.ndarray] | None:
+    """Usage:
+        Run load linear checkpoint.
+    
+    Args:
+        path: str | None.
+    
+    Returns:
+        dict[str, np.ndarray] | None.
+    """
     if path is None:
         return None
     ckpt_path = Path(path).expanduser()
@@ -66,6 +94,17 @@ def estimate_incomplete_foa_from_stereo_dl(
     fs: float,
     config: StereoFOADLConfig | None = None,
 ) -> FOAEstimate:
+    """Usage:
+        Run estimate incomplete foa from stereo dl.
+    
+    Args:
+        stereo: ArrayLike.
+        fs: float.
+        config: StereoFOADLConfig | None, default=None.
+    
+    Returns:
+        FOAEstimate.
+    """
     cfg = config or StereoFOADLConfig()
     x = np.asarray(stereo, dtype=float)
     if x.ndim != 2 or x.shape[1] != 2:

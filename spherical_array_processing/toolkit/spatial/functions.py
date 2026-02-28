@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.toolkit.spatial.functions import <symbol>
+"""
+
 from __future__ import annotations
 
 import math
@@ -30,6 +36,16 @@ _SHT_DESIGNS_MAT = provider_resource_root("sht") / "t_designs_1_21.mat"
 
 
 def sorted_eig(x: ArrayLike, direction: str = "descend") -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run sorted eig.
+    
+    Args:
+        x: ArrayLike.
+        direction: str, default='descend'.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     arr = np.asarray(x, dtype=np.complex128)
     if arr.ndim != 2 or arr.shape[0] != arr.shape[1]:
         raise ValueError("input matrix should be square")
@@ -45,11 +61,29 @@ def sorted_eig(x: ArrayLike, direction: str = "descend") -> tuple[np.ndarray, np
 
 
 def beam_weights_cardioid_to_differential(order: int) -> np.ndarray:
+    """Usage:
+        Run beam weights cardioid to differential.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     return np.array([(0.5**order) * math.comb(order, n) for n in range(order + 1)], dtype=float)
 
 
 def _legendre_poly_coeffs_ascending(order: int) -> np.ndarray:
     # Coeffs in ascending powers of x, matching matrix construction in MATLAB helper.
+    """Usage:
+        Run legendre poly coeffs ascending.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     coeffs = np.zeros(order + 1, dtype=float)
     for k in range(order // 2 + 1):
         c = (
@@ -64,6 +98,15 @@ def _legendre_poly_coeffs_ascending(order: int) -> np.ndarray:
 
 
 def beam_weights_differential_to_spherical(a_n: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run beam weights differential to spherical.
+    
+    Args:
+        a_n: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     a = np.asarray(a_n, dtype=float).reshape(-1)
     order = a.size - 1
     p_mat = np.zeros((order + 1, order + 1), dtype=float)
@@ -77,6 +120,19 @@ def beam_weights_differential_to_spherical(a_n: ArrayLike) -> np.ndarray:
 
 
 def sph_array_noise(radius_m: float, n_mics: int, max_order: int, array_type: str, freqs_hz: ArrayLike) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run sph array noise.
+    
+    Args:
+        radius_m: float.
+        n_mics: int.
+        max_order: int.
+        array_type: str.
+        freqs_hz: ArrayLike.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     f = np.asarray(freqs_hz, dtype=float).reshape(-1)
     c = 343.0
     kR = 2 * np.pi * f * radius_m / c
@@ -100,6 +156,19 @@ def sph_array_noise_threshold(
     max_order: int,
     array_type: str,
 ) -> np.ndarray:
+    """Usage:
+        Run sph array noise threshold.
+    
+    Args:
+        radius_m: float.
+        n_mics: int.
+        max_g_db: float.
+        max_order: int.
+        array_type: str.
+    
+    Returns:
+        np.ndarray.
+    """
     c = 343.0
     out = np.zeros(max_order, dtype=float)
     max_g = 10 ** (max_g_db / 10.0)
@@ -111,6 +180,17 @@ def sph_array_noise_threshold(
 
 
 def check_condition_number_sht(max_order: int, mic_dirs_az_el_rad: ArrayLike, weights: ArrayLike | None = None) -> np.ndarray:
+    """Usage:
+        Run check condition number sht.
+    
+    Args:
+        max_order: int.
+        mic_dirs_az_el_rad: ArrayLike.
+        weights: ArrayLike | None, default=None.
+    
+    Returns:
+        np.ndarray.
+    """
     dirs = np.asarray(mic_dirs_az_el_rad, dtype=float)
     if dirs.ndim != 2 or dirs.shape[1] != 2:
         raise ValueError("mic_dirs_az_el_rad must be [M,2] az/elev")
@@ -127,6 +207,19 @@ def sph_array_alias_lim(
     mic_dirs_az_el_rad: ArrayLike,
     mic_weights: ArrayLike | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run sph array alias lim.
+    
+    Args:
+        radius_m: float.
+        n_mics: int.
+        max_order: int.
+        mic_dirs_az_el_rad: ArrayLike.
+        mic_weights: ArrayLike | None, default=None.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     c = 343.0
     f_alias = np.zeros(3, dtype=float)
     f_alias[0] = c * max_order / (2 * np.pi * radius_m)
@@ -149,6 +242,15 @@ def default_eigenmike_like_dirs() -> np.ndarray:
 
 def beam_weights_cardioid_to_spherical(order: int) -> np.ndarray:
     # Exact closed-form from Spatial `beamWeightsCardioid2Spherical.m`.
+    """Usage:
+        Run beam weights cardioid to spherical.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     b_n = np.zeros(order + 1, dtype=float)
     for n in range(order + 1):
         b_n[n] = (
@@ -164,6 +266,15 @@ def beam_weights_cardioid_to_spherical(order: int) -> np.ndarray:
 def beamWeightsHypercardioid2Spherical(order: int) -> np.ndarray:
     # Match MATLAB beamWeightsHypercardioid2Spherical.m exactly:
     # c_n = 4*pi/(N+1)^2 * getSH(N,[0 0],'real'); then pick m=0 entries.
+    """Usage:
+        Run beamWeightsHypercardioid2Spherical.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     dirs = np.array([[0.0, 0.0]], dtype=float)  # [azimuth, inclination]
     c = (4.0 * np.pi / float((order + 1) ** 2)) * getSH(order, dirs, "real").reshape(-1)
     b = np.zeros(order + 1, dtype=float)
@@ -174,6 +285,15 @@ def beamWeightsHypercardioid2Spherical(order: int) -> np.ndarray:
 
 
 def beamWeightsSupercardioid2Spherical(order: int) -> np.ndarray:
+    """Usage:
+        Run beamWeightsSupercardioid2Spherical.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     table = {
         1: np.array([1.2975, 1.2975], dtype=float),
         2: np.array([0.8372, 0.9591, 0.4680], dtype=float),
@@ -186,6 +306,15 @@ def beamWeightsSupercardioid2Spherical(order: int) -> np.ndarray:
 
 
 def beamWeightsMaxEV(order: int) -> np.ndarray:
+    """Usage:
+        Run beamWeightsMaxEV.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     d_n = np.zeros(order + 1, dtype=float)
     x = np.cos(2.4068 / (order + 1.51))
     for n in range(order + 1):
@@ -196,31 +325,94 @@ def beamWeightsMaxEV(order: int) -> np.ndarray:
 
 def _cheby_poly_coeffs_ascending(order: int) -> np.ndarray:
     # Chebyshev T_n coefficients in ascending powers of x
+    """Usage:
+        Run cheby poly coeffs ascending.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     coeffs_desc = np.polynomial.chebyshev.Chebyshev.basis(order).convert(kind=np.polynomial.Polynomial).coef[::-1]
     return coeffs_desc[::-1]
 
 
 def returnLegePolyCoeffs(order: int) -> np.ndarray:
+    """Usage:
+        Run returnLegePolyCoeffs.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     return _legendre_poly_coeffs_ascending(order).reshape(-1, 1)
 
 
 def returnChebyPolyCoeffs(order: int) -> np.ndarray:
+    """Usage:
+        Run returnChebyPolyCoeffs.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     return _cheby_poly_coeffs_ascending(order).reshape(-1, 1)
 
 
 def beamWeightsCardioid2Differential(N: int) -> np.ndarray:
+    """Usage:
+        Run beamWeightsCardioid2Differential.
+    
+    Args:
+        N: int.
+    
+    Returns:
+        np.ndarray.
+    """
     return beam_weights_cardioid_to_differential(N)
 
 
 def beamWeightsCardioid2Spherical(N: int) -> np.ndarray:
+    """Usage:
+        Run beamWeightsCardioid2Spherical.
+    
+    Args:
+        N: int.
+    
+    Returns:
+        np.ndarray.
+    """
     return beam_weights_cardioid_to_spherical(N)
 
 
 def beamWeightsDifferential2Spherical(a_n: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run beamWeightsDifferential2Spherical.
+    
+    Args:
+        a_n: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     return beam_weights_differential_to_spherical(a_n)
 
 
 def beamWeightsPressureVelocity(basisType: str = "real") -> np.ndarray:
+    """Usage:
+        Run beamWeightsPressureVelocity.
+    
+    Args:
+        basisType: str, default='real'.
+    
+    Returns:
+        np.ndarray.
+    """
     return beam_weights_pressure_velocity(basisType)
 
 
@@ -255,6 +447,15 @@ def differentialGains() -> dict[str, dict[int, np.ndarray]]:
 
 
 def beam_weights_pressure_velocity(basis_type: str = "real") -> np.ndarray:
+    """Usage:
+        Run beam weights pressure velocity.
+    
+    Args:
+        basis_type: str, default='real'.
+    
+    Returns:
+        np.ndarray.
+    """
     if basis_type == "real":
         return np.sqrt(4 * np.pi) * np.array(
             [
@@ -279,6 +480,17 @@ def beam_weights_pressure_velocity(basis_type: str = "real") -> np.ndarray:
 
 
 def beamWeightsDolphChebyshev2Spherical(N: int, paramType: str, arrayParam: float) -> np.ndarray:
+    """Usage:
+        Run beamWeightsDolphChebyshev2Spherical.
+    
+    Args:
+        N: int.
+        paramType: str.
+        arrayParam: float.
+    
+    Returns:
+        np.ndarray.
+    """
     M = 2 * N
     if paramType == "sidelobe":
         R = 1.0 / arrayParam
@@ -318,6 +530,16 @@ def beamWeightsDolphChebyshev2Spherical(N: int, paramType: str, arrayParam: floa
 
 
 def beamWeightsLinear2Spherical(a_n: ArrayLike, PLOT_ON: bool = False) -> np.ndarray:
+    """Usage:
+        Run beamWeightsLinear2Spherical.
+    
+    Args:
+        a_n: ArrayLike.
+        PLOT_ON: bool, default=False.
+    
+    Returns:
+        np.ndarray.
+    """
     a = np.asarray(a_n, dtype=float).reshape(-1)
     N = a.size - 1
     W_lin = np.eye(N + 1)
@@ -339,6 +561,16 @@ def beamWeightsLinear2Spherical(a_n: ArrayLike, PLOT_ON: bool = False) -> np.nda
 
 
 def beamWeightsFromFunction(fHandleArray: Callable | Sequence[Callable], order: int) -> np.ndarray:
+    """Usage:
+        Run beamWeightsFromFunction.
+    
+    Args:
+        fHandleArray: Callable | Sequence[Callable].
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     grid = get_tdesign_fallback(order=20, n_points=512)
     # MATLAB grid is az/elev; fallback grid may be az/colat
     dirs_az = grid.azimuth
@@ -357,6 +589,15 @@ def beamWeightsFromFunction(fHandleArray: Callable | Sequence[Callable], order: 
 
 
 def extractAxisCoeffs(a_nm: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run extractAxisCoeffs.
+    
+    Args:
+        a_nm: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     a = np.asarray(a_nm)
     if a.ndim == 1:
         a = a[:, None]
@@ -371,6 +612,15 @@ def extractAxisCoeffs(a_nm: ArrayLike) -> np.ndarray:
 
 
 def beamWeightsTorus2Spherical(N: int) -> np.ndarray:
+    """Usage:
+        Run beamWeightsTorus2Spherical.
+    
+    Args:
+        N: int.
+    
+    Returns:
+        np.ndarray.
+    """
     table = {
         1: np.array([2.7842, 0.0000, -0.7781, 0.0000, -0.1303]),
         2: np.array([2.3633, -0.0000, -1.0569]),
@@ -383,6 +633,16 @@ def beamWeightsTorus2Spherical(N: int) -> np.ndarray:
 
 
 def plotAxisymPatternFromCoeffs(b_n: ArrayLike, ax=None):
+    """Usage:
+        Run plotAxisymPatternFromCoeffs.
+    
+    Args:
+        b_n: ArrayLike.
+        ax: value, default=None.
+    
+    Returns:
+        value.
+    """
     import matplotlib.pyplot as plt
 
     b = np.asarray(b_n, dtype=float).reshape(-1)
@@ -398,6 +658,16 @@ def plotAxisymPatternFromCoeffs(b_n: ArrayLike, ax=None):
 
 
 def plotMicArray(mic_dirs_deg: ArrayLike, R: float):
+    """Usage:
+        Run plotMicArray.
+    
+    Args:
+        mic_dirs_deg: ArrayLike.
+        R: float.
+    
+    Returns:
+        value.
+    """
     from ...plotting import plot_mic_array
 
     return plot_mic_array(mic_dirs_deg, R)
@@ -411,6 +681,20 @@ def plotDirectionalMapFromGrid(
     POLAR_OR_ELEV: str = "elev",
     ZEROED_OR_CENTERED: str = "centered",
 ):
+    """Usage:
+        Run plotDirectionalMapFromGrid.
+    
+    Args:
+        fgrid: ArrayLike.
+        aziRes: float.
+        polarRes: float.
+        h_ax: value, default=None.
+        POLAR_OR_ELEV: str, default='elev'.
+        ZEROED_OR_CENTERED: str, default='centered'.
+    
+    Returns:
+        value.
+    """
     from ...plotting import plot_directional_map_from_grid
 
     return plot_directional_map_from_grid(
@@ -424,6 +708,16 @@ def plotDirectionalMapFromGrid(
 
 
 def sphNullformer_pwd(order: int, beam_dirs_az_el_rad: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sphNullformer pwd.
+    
+    Args:
+        order: int.
+        beam_dirs_az_el_rad: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     dirs = np.asarray(beam_dirs_az_el_rad, dtype=float)
     if dirs.ndim == 1:
         dirs = dirs[None, :]
@@ -433,6 +727,16 @@ def sphNullformer_pwd(order: int, beam_dirs_az_el_rad: ArrayLike) -> np.ndarray:
 
 
 def sphNullformer_diff(order: int, src_dirs_az_el_rad: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sphNullformer diff.
+    
+    Args:
+        order: int.
+        src_dirs_az_el_rad: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     dirs = np.asarray(src_dirs_az_el_rad, dtype=float)
     if dirs.ndim == 1:
         dirs = dirs[None, :]
@@ -450,6 +754,16 @@ def sphNullformer_diff(order: int, src_dirs_az_el_rad: ArrayLike) -> np.ndarray:
 
 
 def getDiffCohMtxMeas(H_array: ArrayLike, w_grid: ArrayLike | None = None) -> np.ndarray:
+    """Usage:
+        Run getDiffCohMtxMeas.
+    
+    Args:
+        H_array: ArrayLike.
+        w_grid: ArrayLike | None, default=None.
+    
+    Returns:
+        np.ndarray.
+    """
     h = np.asarray(H_array, dtype=np.complex128)
     if h.ndim != 3:
         raise ValueError("H_array must be [n_bins, n_mics, n_grid]")
@@ -476,6 +790,20 @@ def getDiffCohMtxTheory(
     freqs_hz: ArrayLike,
     dir_coeff: float | None = None,
 ) -> np.ndarray:
+    """Usage:
+        Run getDiffCohMtxTheory.
+    
+    Args:
+        mic_dirs_rad: ArrayLike.
+        array_type: str.
+        radius_m: float.
+        n_max: int.
+        freqs_hz: ArrayLike.
+        dir_coeff: float | None, default=None.
+    
+    Returns:
+        np.ndarray.
+    """
     dirs = np.asarray(mic_dirs_rad, dtype=float)
     freqs = np.asarray(freqs_hz, dtype=float).reshape(-1)
     xyz = unit_sph_to_cart(dirs[:, 0], dirs[:, 1], convention="az_el")
@@ -628,6 +956,15 @@ def getSH(N: int, dirs: ArrayLike, basisType: str = "real") -> np.ndarray:
 
 
 def unitSph2cart(aziElev: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run unitSph2cart.
+    
+    Args:
+        aziElev: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     d = np.asarray(aziElev, dtype=float)
     if d.ndim != 2:
         raise ValueError("aziElev must be [n,2] or [2,n]")
@@ -639,6 +976,18 @@ def unitSph2cart(aziElev: ArrayLike) -> np.ndarray:
 
 
 def sphModalCoeffs(N: int, kr: ArrayLike, arrayType: str, dirCoeff: float | None = None) -> np.ndarray:
+    """Usage:
+        Run sphModalCoeffs.
+    
+    Args:
+        N: int.
+        kr: ArrayLike.
+        arrayType: str.
+        dirCoeff: float | None, default=None.
+    
+    Returns:
+        np.ndarray.
+    """
     kr_arr = np.asarray(kr, dtype=float).reshape(-1)
     if arrayType in ("open", "rigid"):
         return sph_modal_coeffs(int(N), kr_arr, array_type=arrayType)
@@ -655,6 +1004,15 @@ def sphModalCoeffs(N: int, kr: ArrayLike, arrayType: str, dirCoeff: float | None
 
 
 def getTdesign(degree: int) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run getTdesign.
+    
+    Args:
+        degree: int.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     degree = int(degree)
     if degree < 1:
         raise ValueError("degree must be at least 1")
@@ -674,6 +1032,18 @@ def getTdesign(degree: int) -> tuple[np.ndarray, np.ndarray]:
 
 
 def checkCondNumberSHT(N: int, dirs: ArrayLike, basisType: str = "real", W: ArrayLike | None = None) -> np.ndarray:
+    """Usage:
+        Run checkCondNumberSHT.
+    
+    Args:
+        N: int.
+        dirs: ArrayLike.
+        basisType: str, default='real'.
+        W: ArrayLike | None, default=None.
+    
+    Returns:
+        np.ndarray.
+    """
     y = getSH(N, dirs, basisType=basisType)
     if W is not None:
         w = np.asarray(W, dtype=float).reshape(-1)
@@ -691,6 +1061,15 @@ def checkCondNumberSHT(N: int, dirs: ArrayLike, basisType: str = "real", W: Arra
 
 
 def conjCoeffs(f_nm: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run conjCoeffs.
+    
+    Args:
+        f_nm: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     f = np.asarray(f_nm, dtype=np.complex128).reshape(-1)
     N = int(round(np.sqrt(f.size) - 1))
     if (N + 1) ** 2 != f.size:
@@ -705,6 +1084,18 @@ def conjCoeffs(f_nm: ArrayLike) -> np.ndarray:
 
 
 def rotateAxisCoeffs(c_n: ArrayLike, theta_0: float, phi_0: float, basisType: str = "real") -> np.ndarray:
+    """Usage:
+        Run rotateAxisCoeffs.
+    
+    Args:
+        c_n: ArrayLike.
+        theta_0: float.
+        phi_0: float.
+        basisType: str, default='real'.
+    
+    Returns:
+        np.ndarray.
+    """
     c = np.asarray(c_n, dtype=np.complex128).reshape(-1)
     N = c.size - 1
     y = getSH(N, np.array([[phi_0, theta_0]], dtype=float), basisType="complex")[0]
@@ -721,6 +1112,17 @@ def rotateAxisCoeffs(c_n: ArrayLike, theta_0: float, phi_0: float, basisType: st
 
 
 def gaunt_mtx(N1: int, N2: int, N: int) -> np.ndarray:
+    """Usage:
+        Run gaunt mtx.
+    
+    Args:
+        N1: int.
+        N2: int.
+        N: int.
+    
+    Returns:
+        np.ndarray.
+    """
     N1 = int(N1)
     N2 = int(N2)
     N = int(N)
@@ -737,18 +1139,67 @@ def gaunt_mtx(N1: int, N2: int, N: int) -> np.ndarray:
 
 
 def chebyshevPoly(n: int) -> np.ndarray:
+    """Usage:
+        Run chebyshevPoly.
+    
+    Args:
+        n: int.
+    
+    Returns:
+        np.ndarray.
+    """
     return _cheby_poly_coeffs_ascending(int(n))
 
 
 def sphArrayNoise(R: float, Nmic: int, maxN: int, arrayType: str, f: ArrayLike):
+    """Usage:
+        Run sphArrayNoise.
+    
+    Args:
+        R: float.
+        Nmic: int.
+        maxN: int.
+        arrayType: str.
+        f: ArrayLike.
+    
+    Returns:
+        value.
+    """
     return sph_array_noise(R, Nmic, maxN, arrayType, f)
 
 
 def sphArrayNoiseThreshold(R: float, Nmic: int, maxG_db: float, maxN: int, arrayType: str, dirCoeff=None):
+    """Usage:
+        Run sphArrayNoiseThreshold.
+    
+    Args:
+        R: float.
+        Nmic: int.
+        maxG_db: float.
+        maxN: int.
+        arrayType: str.
+        dirCoeff: value, default=None.
+    
+    Returns:
+        value.
+    """
     return sph_array_noise_threshold(R, Nmic, maxG_db, maxN, arrayType)
 
 
 def sphArrayAliasLim(R: float, Nmic: int, maxN: int, mic_dirs_rad: ArrayLike, mic_weights: ArrayLike | None = None):
+    """Usage:
+        Run sphArrayAliasLim.
+    
+    Args:
+        R: float.
+        Nmic: int.
+        maxN: int.
+        mic_dirs_rad: ArrayLike.
+        mic_weights: ArrayLike | None, default=None.
+    
+    Returns:
+        value.
+    """
     return sph_array_alias_lim(R, Nmic, maxN, mic_dirs_rad, mic_weights)
 
 
@@ -779,6 +1230,20 @@ def _fix_modal_dc_limits(bN: np.ndarray) -> np.ndarray:
 def arraySHTfiltersTheory_radInverse(
     radius_m: float, n_mics: int, order_sht: int, fft_len: int, fs: float, amp_threshold_db: float
 ) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run arraySHTfiltersTheory radInverse.
+    
+    Args:
+        radius_m: float.
+        n_mics: int.
+        order_sht: int.
+        fft_len: int.
+        fs: float.
+        amp_threshold_db: float.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     c = 343.0
     freqs = np.arange(fft_len // 2 + 1, dtype=float) * fs / fft_len
     order_sht = min(order_sht, int(np.floor(np.sqrt(n_mics) - 1)))
@@ -796,6 +1261,20 @@ def arraySHTfiltersTheory_radInverse(
 def arraySHTfiltersTheory_softLim(
     radius_m: float, n_mics: int, order_sht: int, fft_len: int, fs: float, amp_threshold_db: float
 ) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run arraySHTfiltersTheory softLim.
+    
+    Args:
+        radius_m: float.
+        n_mics: int.
+        order_sht: int.
+        fft_len: int.
+        fs: float.
+        amp_threshold_db: float.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     c = 343.0
     freqs = np.arange(fft_len // 2 + 1, dtype=float) * fs / fft_len
     order_sht = min(order_sht, int(np.floor(np.sqrt(n_mics) - 1)))
@@ -855,6 +1334,16 @@ def arraySHTfiltersTheory_regLS(
 
 
 def _onesided_from_full_or_half(H_array: np.ndarray, nFFT: int) -> np.ndarray:
+    """Usage:
+        Run onesided from full or half.
+    
+    Args:
+        H_array: np.ndarray.
+        nFFT: int.
+    
+    Returns:
+        np.ndarray.
+    """
     n_bins = nFFT // 2 + 1
     if H_array.shape[0] == n_bins:
         return H_array
@@ -871,6 +1360,20 @@ def arraySHTfiltersMeas_regLS(
     nFFT: int,
     amp_threshold_db: float,
 ) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run arraySHTfiltersMeas regLS.
+    
+    Args:
+        H_array: ArrayLike.
+        order_sht: int.
+        grid_dirs_rad: ArrayLike.
+        w_grid: ArrayLike | None.
+        nFFT: int.
+        amp_threshold_db: float.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     H = np.asarray(H_array, dtype=np.complex128)
     H = _onesided_from_full_or_half(H, nFFT)
     n_bins, n_mics, n_grid = H.shape
@@ -902,6 +1405,20 @@ def arraySHTfiltersMeas_regLSHD(
     nFFT: int,
     amp_threshold_db: float,
 ) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run arraySHTfiltersMeas regLSHD.
+    
+    Args:
+        H_array: ArrayLike.
+        order_sht: int.
+        grid_dirs_rad: ArrayLike.
+        w_grid: ArrayLike | None.
+        nFFT: int.
+        amp_threshold_db: float.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     H = np.asarray(H_array, dtype=np.complex128)
     H = _onesided_from_full_or_half(H, nFFT)
     n_bins, n_mics, n_grid = H.shape
@@ -940,6 +1457,20 @@ def evaluateSHTfilters(
     w_grid: ArrayLike | None = None,
     plot: bool = False,
 ):
+    """Usage:
+        Run evaluateSHTfilters.
+    
+    Args:
+        M_mic2sh: ArrayLike.
+        H_array: ArrayLike.
+        fs: float.
+        Y_grid: ArrayLike.
+        w_grid: ArrayLike | None, default=None.
+        plot: bool, default=False.
+    
+    Returns:
+        value.
+    """
     M = np.asarray(M_mic2sh, dtype=np.complex128)  # [nSH, nMics, nBins]
     H = np.asarray(H_array, dtype=np.complex128)  # [nBins, nMics, nGrid]
     Yg = np.asarray(Y_grid, dtype=np.complex128)  # [nGrid, nSH]
@@ -991,6 +1522,18 @@ def evaluateSHTfilters(
 
 
 def arraySHTfilters_diffEQ(M_mic2sh: ArrayLike, M_dfc: ArrayLike, f_alias: ArrayLike, fs: float) -> np.ndarray:
+    """Usage:
+        Run arraySHTfilters diffEQ.
+    
+    Args:
+        M_mic2sh: ArrayLike.
+        M_dfc: ArrayLike.
+        f_alias: ArrayLike.
+        fs: float.
+    
+    Returns:
+        np.ndarray.
+    """
     M = np.asarray(M_mic2sh, dtype=np.complex128)  # [nSH, nMics, nBins]
     D = np.asarray(M_dfc, dtype=np.complex128)  # [nMics, nMics, nBins]
     f_alias = np.asarray(f_alias, dtype=float).reshape(-1)

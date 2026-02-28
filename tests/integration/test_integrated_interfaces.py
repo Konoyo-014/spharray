@@ -1,3 +1,9 @@
+"""Test module.
+
+Usage:
+    pytest -q tests/integration/test_integrated_interfaces.py
+"""
+
 import numpy as np
 
 from spherical_array_processing.toolkit import array_response_simulator as ars
@@ -8,6 +14,12 @@ from spherical_array_processing.toolkit.harmonics import HARMONICS_RESOURCE_DIR
 
 
 def test_toolkit_resource_dirs_are_resolvable():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     assert SPATIAL_RESOURCE_DIR.exists()
     assert SPATIAL_RESOURCE_DIR.is_dir()
     assert HARMONICS_RESOURCE_DIR.exists()
@@ -15,6 +27,12 @@ def test_toolkit_resource_dirs_are_resolvable():
 
 
 def test_toolkit_exports_have_expected_surface():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     assert "getFliegeNodes" in sht.__all__
     assert "getTdesign" in sht.__all__
     assert "simulateSphArray" in ars.__all__
@@ -22,6 +40,12 @@ def test_toolkit_exports_have_expected_surface():
 
 
 def test_sht_smoke_roundtrip_and_geometry_helpers():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     dirs = sht.grid2dirs(90, 90, POLAR_OR_ELEV=1, ZEROED_OR_CENTERED=1)
     f = np.linspace(0.0, 1.0, dirs.shape[0])
     fn, _ = sht.directSHT(1, f, dirs, "real")
@@ -44,6 +68,12 @@ def test_sht_smoke_roundtrip_and_geometry_helpers():
 
 
 def test_array_response_simulator_smoke():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     x = np.array([0.0, 0.3, 1.2])
     j0 = ars.sph_besselj(0, x)
     coeffs = ars.sphModalCoeffs(3, np.linspace(0.1, 2.0, 8), "open")
@@ -65,6 +95,16 @@ def test_array_response_simulator_smoke():
 
 
 def test_get_fliege_nodes_uses_deterministic_fallback_when_resource_missing(tmp_path, monkeypatch):
+    """Usage:
+        Run this test case.
+    
+    Args:
+        tmp_path: value.
+        monkeypatch: value.
+    
+    Returns:
+        value.
+    """
     monkeypatch.setattr(sht_functions, "_FLIEGE_MAT", tmp_path / "missing_fliege.mat")
     v1, d1, w1 = sht.getFliegeNodes(5)
     v2, d2, w2 = sht.getFliegeNodes(5)

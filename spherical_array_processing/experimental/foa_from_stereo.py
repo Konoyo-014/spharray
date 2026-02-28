@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.experimental.foa_from_stereo import <symbol>
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -10,6 +16,9 @@ from scipy.signal import stft
 
 @dataclass
 class StereoFOAConfig:
+    """Usage:
+        Instantiate `StereoFOAConfig` to work with StereoFOAConfig.
+    """
     nperseg: int = 1024
     noverlap: int = 512
     geometry: str = "lr_pair"
@@ -24,6 +33,9 @@ class StereoFOAConfig:
 
 @dataclass
 class FOAEstimate:
+    """Usage:
+        Instantiate `FOAEstimate` to work with FOAEstimate.
+    """
     foa_stft: np.ndarray  # [4, F, T] complex, channels [W, X, Y, Z]
     freqs_hz: np.ndarray
     times_s: np.ndarray
@@ -34,6 +46,17 @@ class FOAEstimate:
 
 
 def _estimate_sin_azimuth(ipd: np.ndarray, denom: np.ndarray, mode: str) -> np.ndarray:
+    """Usage:
+        Run estimate sin azimuth.
+    
+    Args:
+        ipd: np.ndarray.
+        denom: np.ndarray.
+        mode: str.
+    
+    Returns:
+        np.ndarray.
+    """
     if mode == "hard":
         return np.clip(ipd / denom, -1.0, 1.0)
     if mode == "soft":

@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.regression.image_compare import <symbol>
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -11,6 +17,16 @@ except Exception:  # pragma: no cover
 
 
 def compare_grayscale_images(reference: np.ndarray, candidate: np.ndarray) -> dict[str, float]:
+    """Usage:
+        Run compare grayscale images.
+    
+    Args:
+        reference: np.ndarray.
+        candidate: np.ndarray.
+    
+    Returns:
+        dict[str, float].
+    """
     ref = np.asarray(reference, dtype=float)
     cand = np.asarray(candidate, dtype=float)
     if ref.shape != cand.shape:
@@ -26,6 +42,15 @@ def compare_grayscale_images(reference: np.ndarray, candidate: np.ndarray) -> di
 
 
 def load_image_gray(path: str | Path) -> np.ndarray:
+    """Usage:
+        Run load image gray.
+    
+    Args:
+        path: str | Path.
+    
+    Returns:
+        np.ndarray.
+    """
     import matplotlib.image as mpimg
 
     img = mpimg.imread(path)

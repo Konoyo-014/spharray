@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.toolkit.spatial import <symbol>
+"""
+
 from .._resource_paths import provider_resource_root
 
 SPATIAL_RESOURCE_DIR = provider_resource_root("spatial")

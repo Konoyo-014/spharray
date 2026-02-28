@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.regression.status import <symbol>
+"""
+
 from __future__ import annotations
 
 from typing import Literal

@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.coherence.diffuse import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -5,6 +11,17 @@ from numpy.typing import ArrayLike
 
 
 def diffuse_coherence_matrix_omni(sensor_xyz: ArrayLike, freqs_hz: ArrayLike, c: float = 343.0) -> np.ndarray:
+    """Usage:
+        Run diffuse coherence matrix omni.
+    
+    Args:
+        sensor_xyz: ArrayLike.
+        freqs_hz: ArrayLike.
+        c: float, default=343.0.
+    
+    Returns:
+        np.ndarray.
+    """
     xyz = np.asarray(sensor_xyz, dtype=float)
     f = np.asarray(freqs_hz, dtype=float).reshape(-1)
     if xyz.ndim != 2 or xyz.shape[1] != 3:
@@ -19,6 +36,16 @@ def diffuse_coherence_matrix_omni(sensor_xyz: ArrayLike, freqs_hz: ArrayLike, c:
 
 
 def diffuse_coherence_from_weights(w_a: ArrayLike, w_b: ArrayLike) -> complex:
+    """Usage:
+        Run diffuse coherence from weights.
+    
+    Args:
+        w_a: ArrayLike.
+        w_b: ArrayLike.
+    
+    Returns:
+        complex.
+    """
     a = np.asarray(w_a, dtype=np.complex128).reshape(-1)
     b = np.asarray(w_b, dtype=np.complex128).reshape(-1)
     if a.size != b.size:

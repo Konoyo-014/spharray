@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.beamforming import <symbol>
+"""
+
 from .adaptive import lcmv_weights, mvdr_weights
 from .fixed import (
     axisymmetric_pattern,

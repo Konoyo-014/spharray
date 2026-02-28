@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.toolkit.sht.functions import <symbol>
+"""
+
 from __future__ import annotations
 
 import math
@@ -35,6 +41,18 @@ _FLIEGE_MAT = provider_resource_root("sht") / "fliegeMaierNodes_1_30.mat"
 
 
 def grid2dirs(aziRes: float, polarRes: float, POLAR_OR_ELEV: int = 1, ZEROED_OR_CENTERED: int = 1) -> np.ndarray:
+    """Usage:
+        Run grid2dirs.
+    
+    Args:
+        aziRes: float.
+        polarRes: float.
+        POLAR_OR_ELEV: int, default=1.
+        ZEROED_OR_CENTERED: int, default=1.
+    
+    Returns:
+        np.ndarray.
+    """
     if (360 % aziRes) != 0 or (180 % polarRes) != 0:
         raise ValueError("azimuth/polar resolution should divide 360/180 exactly")
 
@@ -60,6 +78,18 @@ def grid2dirs(aziRes: float, polarRes: float, POLAR_OR_ELEV: int = 1, ZEROED_OR_
 
 
 def Fdirs2grid(W: ArrayLike, aziRes: float, polarRes: float, CLOSED: int = 0) -> np.ndarray:
+    """Usage:
+        Run Fdirs2grid.
+    
+    Args:
+        W: ArrayLike.
+        aziRes: float.
+        polarRes: float.
+        CLOSED: int, default=0.
+    
+    Returns:
+        np.ndarray.
+    """
     w = np.asarray(W)
     if w.ndim == 1:
         w = w[:, None]
@@ -86,6 +116,19 @@ def Fdirs2grid(W: ArrayLike, aziRes: float, polarRes: float, CLOSED: int = 0) ->
 
 
 def directSHT(N: int, F: ArrayLike, dirs: ArrayLike, basisType: str, weights: ArrayLike | None = None):
+    """Usage:
+        Run directSHT.
+    
+    Args:
+        N: int.
+        F: ArrayLike.
+        dirs: ArrayLike.
+        basisType: str.
+        weights: ArrayLike | None, default=None.
+    
+    Returns:
+        value.
+    """
     y = getSH(N, dirs, basisType)
     f = np.asarray(F)
     if f.ndim == 1:
@@ -102,6 +145,19 @@ def directSHT(N: int, F: ArrayLike, dirs: ArrayLike, basisType: str, weights: Ar
 
 
 def leastSquaresSHT(N: int, F: ArrayLike, dirs: ArrayLike, basisType: str, weights: ArrayLike | None = None):
+    """Usage:
+        Run leastSquaresSHT.
+    
+    Args:
+        N: int.
+        F: ArrayLike.
+        dirs: ArrayLike.
+        basisType: str.
+        weights: ArrayLike | None, default=None.
+    
+    Returns:
+        value.
+    """
     y = getSH(N, dirs, basisType)
     f = np.asarray(F)
     if f.ndim == 1:
@@ -116,6 +172,17 @@ def leastSquaresSHT(N: int, F: ArrayLike, dirs: ArrayLike, basisType: str, weigh
 
 
 def inverseSHT(F_N: ArrayLike, dirs: ArrayLike, basisType: str):
+    """Usage:
+        Run inverseSHT.
+    
+    Args:
+        F_N: ArrayLike.
+        dirs: ArrayLike.
+        basisType: str.
+    
+    Returns:
+        value.
+    """
     fn = np.asarray(F_N)
     if fn.ndim == 1:
         fn = fn[:, None]
@@ -125,6 +192,15 @@ def inverseSHT(F_N: ArrayLike, dirs: ArrayLike, basisType: str):
 
 
 def complex2realSHMtx(N: int) -> np.ndarray:
+    """Usage:
+        Run complex2realSHMtx.
+    
+    Args:
+        N: int.
+    
+    Returns:
+        np.ndarray.
+    """
     n = int(N)
     t = np.zeros(((n + 1) ** 2, (n + 1) ** 2), dtype=np.complex128)
     t[0, 0] = 1.0
@@ -141,6 +217,15 @@ def complex2realSHMtx(N: int) -> np.ndarray:
 
 
 def real2complexSHMtx(N: int) -> np.ndarray:
+    """Usage:
+        Run real2complexSHMtx.
+    
+    Args:
+        N: int.
+    
+    Returns:
+        np.ndarray.
+    """
     n = int(N)
     t = np.zeros(((n + 1) ** 2, (n + 1) ** 2), dtype=np.complex128)
     t[0, 0] = 1.0
@@ -157,6 +242,15 @@ def real2complexSHMtx(N: int) -> np.ndarray:
 
 
 def complex2realCoeffs(C_N: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run complex2realCoeffs.
+    
+    Args:
+        C_N: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     c = np.asarray(C_N, dtype=np.complex128)
     if c.ndim == 1:
         c = c[:, None]
@@ -166,6 +260,15 @@ def complex2realCoeffs(C_N: ArrayLike) -> np.ndarray:
 
 
 def real2complexCoeffs(R_N: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run real2complexCoeffs.
+    
+    Args:
+        R_N: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     r = np.asarray(R_N)
     if r.ndim == 1:
         r = r[:, None]
@@ -175,6 +278,18 @@ def real2complexCoeffs(R_N: ArrayLike) -> np.ndarray:
 
 
 def euler2rotationMatrix(alpha: float, beta: float, gamma: float, convention: str = "zyz") -> np.ndarray:
+    """Usage:
+        Run euler2rotationMatrix.
+    
+    Args:
+        alpha: float.
+        beta: float.
+        gamma: float.
+        convention: str, default='zyz'.
+    
+    Returns:
+        np.ndarray.
+    """
     rx = lambda th: np.array([[1, 0, 0], [0, np.cos(th), np.sin(th)], [0, -np.sin(th), np.cos(th)]], dtype=float)
     ry = lambda th: np.array([[np.cos(th), 0, -np.sin(th)], [0, 1, 0], [np.sin(th), 0, np.cos(th)]], dtype=float)
     rz = lambda th: np.array([[np.cos(th), np.sin(th), 0], [-np.sin(th), np.cos(th), 0], [0, 0, 1]], dtype=float)
@@ -187,6 +302,17 @@ def euler2rotationMatrix(alpha: float, beta: float, gamma: float, convention: st
 
 
 def getSHrotMtx(Rxyz: ArrayLike, L: int, basisType: str = "real") -> np.ndarray:
+    """Usage:
+        Run getSHrotMtx.
+    
+    Args:
+        Rxyz: ArrayLike.
+        L: int.
+        basisType: str, default='real'.
+    
+    Returns:
+        np.ndarray.
+    """
     rxyz = np.asarray(Rxyz, dtype=float)
     if rxyz.shape != (3, 3):
         raise ValueError("Rxyz must be 3x3")
@@ -207,10 +333,30 @@ def getSHrotMtx(Rxyz: ArrayLike, L: int, basisType: str = "real") -> np.ndarray:
 
 
 def gaunt_mtx_fast(N1: int, N2: int, N: int) -> np.ndarray:
+    """Usage:
+        Run gaunt mtx fast.
+    
+    Args:
+        N1: int.
+        N2: int.
+        N: int.
+    
+    Returns:
+        np.ndarray.
+    """
     return gaunt_mtx(N1, N2, N)
 
 
 def getRealGauntMtx(cGmtx: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run getRealGauntMtx.
+    
+    Args:
+        cGmtx: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     c = np.asarray(cGmtx, dtype=np.complex128)
     n1 = int(round(np.sqrt(c.shape[0]) - 1))
     n2 = int(round(np.sqrt(c.shape[1]) - 1))
@@ -230,6 +376,16 @@ def getRealGauntMtx(cGmtx: ArrayLike) -> np.ndarray:
 
 
 def legendre2(N: int, x: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run legendre2.
+    
+    Args:
+        N: int.
+        x: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     xx = np.asarray(x, dtype=float).reshape(-1)
     n = int(N)
     pos = np.vstack([lpmv(m, n, xx) for m in range(0, n + 1)])
@@ -242,6 +398,20 @@ def legendre2(N: int, x: ArrayLike) -> np.ndarray:
 
 
 def w3j(j1: int, j2: int, j3: int, m1: int, m2: int, m3: int) -> float:
+    """Usage:
+        Run w3j.
+    
+    Args:
+        j1: int.
+        j2: int.
+        j3: int.
+        m1: int.
+        m2: int.
+        m3: int.
+    
+    Returns:
+        float.
+    """
     try:
         from scipy.special import wigner_3j  # type: ignore
 
@@ -253,16 +423,53 @@ def w3j(j1: int, j2: int, j3: int, m1: int, m2: int, m3: int) -> float:
 
 
 def w3j_stirling(j1: int, j2: int, j3: int, m1: int, m2: int, m3: int) -> float:
+    """Usage:
+        Run w3j stirling.
+    
+    Args:
+        j1: int.
+        j2: int.
+        j3: int.
+        m1: int.
+        m2: int.
+        m3: int.
+    
+    Returns:
+        float.
+    """
     return w3j(j1, j2, j3, m1, m2, m3)
 
 
 def sym_w3j(j1: int, j2: int, j3: int, m1: int, m2: int, m3: int):
+    """Usage:
+        Run sym w3j.
+    
+    Args:
+        j1: int.
+        j2: int.
+        j3: int.
+        m1: int.
+        m2: int.
+        m3: int.
+    
+    Returns:
+        value.
+    """
     from sympy.physics.wigner import wigner_3j as _w3j
 
     return _w3j(j1, j2, j3, m1, m2, m3)
 
 
 def unitCart2sph(xyz: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run unitCart2sph.
+    
+    Args:
+        xyz: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     arr = np.asarray(xyz, dtype=float)
     if arr.ndim != 2:
         raise ValueError("xyz must be [N,3] or [3,N]")
@@ -275,6 +482,16 @@ def unitCart2sph(xyz: ArrayLike) -> np.ndarray:
 
 
 def sphConvolution(x_nm: ArrayLike, h_n: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sphConvolution.
+    
+    Args:
+        x_nm: ArrayLike.
+        h_n: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     x = np.asarray(x_nm, dtype=np.complex128).reshape(-1)
     h = np.asarray(h_n, dtype=np.complex128).reshape(-1)
     nx = int(round(np.sqrt(x.size) - 1))
@@ -289,6 +506,17 @@ def sphConvolution(x_nm: ArrayLike, h_n: ArrayLike) -> np.ndarray:
 
 
 def sphMultiplication(a_nm: ArrayLike, b_nm: ArrayLike, G: ArrayLike | None = None) -> np.ndarray:
+    """Usage:
+        Run sphMultiplication.
+    
+    Args:
+        a_nm: ArrayLike.
+        b_nm: ArrayLike.
+        G: ArrayLike | None, default=None.
+    
+    Returns:
+        np.ndarray.
+    """
     a = np.asarray(a_nm, dtype=np.complex128).reshape(-1)
     b = np.asarray(b_nm, dtype=np.complex128).reshape(-1)
     na = int(round(np.sqrt(a.size) - 1))
@@ -304,6 +532,15 @@ def sphMultiplication(a_nm: ArrayLike, b_nm: ArrayLike, G: ArrayLike | None = No
 
 
 def sphDelaunay(dirs: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sphDelaunay.
+    
+    Args:
+        dirs: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     d = np.asarray(dirs, dtype=float)
     xyz = unit_sph_to_cart(d[:, 0], d[:, 1], convention="az_el")
     faces = ConvexHull(xyz).simplices[:, ::-1]
@@ -315,6 +552,16 @@ def sphDelaunay(dirs: ArrayLike) -> np.ndarray:
 
 
 def sphVoronoi(dirs: ArrayLike, faces: ArrayLike | None = None):
+    """Usage:
+        Run sphVoronoi.
+    
+    Args:
+        dirs: ArrayLike.
+        faces: ArrayLike | None, default=None.
+    
+    Returns:
+        value.
+    """
     from scipy.spatial import SphericalVoronoi
 
     d = np.asarray(dirs, dtype=float)
@@ -327,10 +574,28 @@ def sphVoronoi(dirs: ArrayLike, faces: ArrayLike | None = None):
 
 
 def sphVoronoiAreas(voronoi: dict[str, Any]) -> dict[str, Any]:
+    """Usage:
+        Run sphVoronoiAreas.
+    
+    Args:
+        voronoi: dict[str, Any].
+    
+    Returns:
+        dict[str, Any].
+    """
     vert = np.asarray(voronoi["vert"], dtype=float)
     faces = voronoi["face"]
 
     def _area(face_idx: np.ndarray) -> float:
+        """Usage:
+            Run area.
+        
+        Args:
+            face_idx: np.ndarray.
+        
+        Returns:
+            float.
+        """
         pts = vert[np.asarray(face_idx, dtype=int)]
         m = pts.shape[0]
         angles = np.zeros(m, dtype=float)
@@ -352,12 +617,30 @@ def sphVoronoiAreas(voronoi: dict[str, Any]) -> dict[str, Any]:
 
 
 def getVoronoiWeights(dirs: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run getVoronoiWeights.
+    
+    Args:
+        dirs: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     vor, _ = sphVoronoi(dirs)
     vor = sphVoronoiAreas(vor)
     return np.asarray(vor["area"], dtype=float)
 
 
 def getFliegeNodes(index: int):
+    """Usage:
+        Run getFliegeNodes.
+    
+    Args:
+        index: int.
+    
+    Returns:
+        value.
+    """
     i = int(index)
     if i > 30 or i < 2:
         raise ValueError("index must be in [2, 30]")
@@ -380,6 +663,17 @@ def getFliegeNodes(index: int):
 
 
 def plotSphFunctionGrid(F_grid: ArrayLike, *args, **kwargs):
+    """Usage:
+        Run plotSphFunctionGrid.
+    
+    Args:
+        F_grid: ArrayLike.
+        *args: value.
+        **kwargs: value.
+    
+    Returns:
+        value.
+    """
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
@@ -389,6 +683,16 @@ def plotSphFunctionGrid(F_grid: ArrayLike, *args, **kwargs):
 
 
 def plotSphFunctionTriangle(*args, **kwargs):
+    """Usage:
+        Run plotSphFunctionTriangle.
+    
+    Args:
+        *args: value.
+        **kwargs: value.
+    
+    Returns:
+        value.
+    """
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
@@ -396,6 +700,17 @@ def plotSphFunctionTriangle(*args, **kwargs):
 
 
 def plotSphFunctionCoeffs(coeffs: ArrayLike, *args, **kwargs):
+    """Usage:
+        Run plotSphFunctionCoeffs.
+    
+    Args:
+        coeffs: ArrayLike.
+        *args: value.
+        **kwargs: value.
+    
+    Returns:
+        value.
+    """
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots()
@@ -446,8 +761,29 @@ __all__ = [
 
 # MATLAB-name compatibility alias.
 def wignerD(N: int, alpha: float, beta: float, gamma: float) -> np.ndarray:
+    """Usage:
+        Run wignerD.
+    
+    Args:
+        N: int.
+        alpha: float.
+        beta: float.
+        gamma: float.
+    
+    Returns:
+        np.ndarray.
+    """
     return wigner_d_matrix(int(N), float(alpha), float(beta), float(gamma))
 
 
 def replicatePerOrder(values: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run replicatePerOrder.
+    
+    Args:
+        values: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     return replicate_per_order(values)

@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.toolkit.spatial.doa_and_diffuseness import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -14,6 +20,15 @@ from ...types import SHBasisSpec, SphericalGrid
 
 
 def _basis_from_cov(cov: np.ndarray) -> SHBasisSpec:
+    """Usage:
+        Run basis from cov.
+    
+    Args:
+        cov: np.ndarray.
+    
+    Returns:
+        SHBasisSpec.
+    """
     n_coeffs = cov.shape[0]
     order = int(round(np.sqrt(n_coeffs) - 1))
     if (order + 1) ** 2 != n_coeffs:
@@ -45,6 +60,17 @@ def sphPWDmap(sph_cov: ArrayLike, grid_dirs_rad: ArrayLike, n_src: int = 1):
 
 
 def sphMUSIC(sph_cov: ArrayLike, grid_dirs_rad: ArrayLike, n_src: int = 1):
+    """Usage:
+        Run sphMUSIC.
+    
+    Args:
+        sph_cov: ArrayLike.
+        grid_dirs_rad: ArrayLike.
+        n_src: int, default=1.
+    
+    Returns:
+        value.
+    """
     cov = np.asarray(sph_cov, dtype=np.complex128)
     grid_dirs = np.asarray(grid_dirs_rad, dtype=float)
     grid = SphericalGrid(azimuth=grid_dirs[:, 0], angle2=grid_dirs[:, 1], convention="az_el")
@@ -53,6 +79,16 @@ def sphMUSIC(sph_cov: ArrayLike, grid_dirs_rad: ArrayLike, n_src: int = 1):
 
 
 def sphMVDR(sph_cov: ArrayLike, beam_dirs_rad: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sphMVDR.
+    
+    Args:
+        sph_cov: ArrayLike.
+        beam_dirs_rad: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     cov = np.asarray(sph_cov, dtype=np.complex128)
     dirs = np.asarray(beam_dirs_rad, dtype=float)
     if dirs.ndim == 1:
@@ -64,6 +100,17 @@ def sphMVDR(sph_cov: ArrayLike, beam_dirs_rad: ArrayLike) -> np.ndarray:
 
 
 def sphMVDRmap(sph_cov: ArrayLike, grid_dirs_rad: ArrayLike, n_src: int = 1):
+    """Usage:
+        Run sphMVDRmap.
+    
+    Args:
+        sph_cov: ArrayLike.
+        grid_dirs_rad: ArrayLike.
+        n_src: int, default=1.
+    
+    Returns:
+        value.
+    """
     cov = np.asarray(sph_cov, dtype=np.complex128)
     dirs = np.asarray(grid_dirs_rad, dtype=float)
     grid = SphericalGrid(azimuth=dirs[:, 0], angle2=dirs[:, 1], convention="az_el")
@@ -79,6 +126,17 @@ def sphMVDRmap(sph_cov: ArrayLike, grid_dirs_rad: ArrayLike, n_src: int = 1):
 
 
 def sphLCMV(sph_cov: ArrayLike, constraint_dirs_rad: ArrayLike, constraints: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run sphLCMV.
+    
+    Args:
+        sph_cov: ArrayLike.
+        constraint_dirs_rad: ArrayLike.
+        constraints: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     cov = np.asarray(sph_cov, dtype=np.complex128)
     dirs = np.asarray(constraint_dirs_rad, dtype=float)
     grid = SphericalGrid(azimuth=dirs[:, 0], angle2=dirs[:, 1], convention="az_el")
@@ -87,22 +145,67 @@ def sphLCMV(sph_cov: ArrayLike, constraint_dirs_rad: ArrayLike, constraints: Arr
 
 
 def getDiffuseness_IE(pv_cov: ArrayLike) -> float:
+    """Usage:
+        Run getDiffuseness IE.
+    
+    Args:
+        pv_cov: ArrayLike.
+    
+    Returns:
+        float.
+    """
     return diffuseness_ie(pv_cov)
 
 
 def getDiffuseness_TV(i_vecs: ArrayLike) -> float:
+    """Usage:
+        Run getDiffuseness TV.
+    
+    Args:
+        i_vecs: ArrayLike.
+    
+    Returns:
+        float.
+    """
     return diffuseness_tv(i_vecs)
 
 
 def getDiffuseness_SV(i_vecs: ArrayLike) -> float:
+    """Usage:
+        Run getDiffuseness SV.
+    
+    Args:
+        i_vecs: ArrayLike.
+    
+    Returns:
+        float.
+    """
     return diffuseness_sv(i_vecs)
 
 
 def getDiffuseness_CMD(sh_cov: ArrayLike):
+    """Usage:
+        Run getDiffuseness CMD.
+    
+    Args:
+        sh_cov: ArrayLike.
+    
+    Returns:
+        value.
+    """
     return diffuseness_cmd(sh_cov)
 
 
 def getDiffuseness_DPV(sh_cov: ArrayLike) -> float:
+    """Usage:
+        Run getDiffuseness DPV.
+    
+    Args:
+        sh_cov: ArrayLike.
+    
+    Returns:
+        float.
+    """
     cov = np.asarray(sh_cov, dtype=np.complex128)
     basis = _basis_from_cov(cov)
     order = basis.max_order
@@ -186,6 +289,22 @@ def sphSRmap(
     grid_dirs_rad: ArrayLike,
     nSrc: int = 1,
 ):
+    """Usage:
+        Run sphSRmap.
+    
+    Args:
+        shsig: ArrayLike.
+        p: float.
+        A_grid: ArrayLike.
+        regValue: float.
+        stopValue: float.
+        maxIter: int.
+        grid_dirs_rad: ArrayLike.
+        nSrc: int, default=1.
+    
+    Returns:
+        value.
+    """
     Y = np.asarray(shsig, dtype=np.complex128)
     A = np.asarray(A_grid, dtype=np.complex128)
     grid_dirs = np.asarray(grid_dirs_rad, dtype=float)
@@ -197,6 +316,17 @@ def sphSRmap(
 
 
 def sphIntensityHist(i_xyz: ArrayLike, grid_dirs_rad: ArrayLike, nSrc: int = 1):
+    """Usage:
+        Run sphIntensityHist.
+    
+    Args:
+        i_xyz: ArrayLike.
+        grid_dirs_rad: ArrayLike.
+        nSrc: int, default=1.
+    
+    Returns:
+        value.
+    """
     i_xyz = np.asarray(i_xyz, dtype=float)
     grid_dirs = np.asarray(grid_dirs_rad, dtype=float)
     grid_xyz = unit_sph_to_cart(grid_dirs[:, 0], grid_dirs[:, 1], convention="az_el")
@@ -278,6 +408,17 @@ def sphESPRIT(Us: ArrayLike) -> np.ndarray:
 
 
 def _esprit_getYnimu(Ynm: np.ndarray, ni: int, mu: int) -> np.ndarray:
+    """Usage:
+        Run esprit getYnimu.
+    
+    Args:
+        Ynm: np.ndarray.
+        ni: int.
+        mu: int.
+    
+    Returns:
+        np.ndarray.
+    """
     N = int(round(np.sqrt(Ynm.shape[1]) - 1))
     idx_nimu, idx_nm = _esprit_muni2q(N, ni, mu)
     Ynimu = np.zeros((Ynm.shape[0], N**2), dtype=np.complex128)
@@ -286,6 +427,17 @@ def _esprit_getYnimu(Ynm: np.ndarray, ni: int, mu: int) -> np.ndarray:
 
 
 def _esprit_muni2q(order: int, ni: int, mu: int) -> tuple[np.ndarray, np.ndarray]:
+    """Usage:
+        Run esprit muni2q.
+    
+    Args:
+        order: int.
+        ni: int.
+        mu: int.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray].
+    """
     nm = []
     for n in range(order):
         nm.extend([(n, m) for m in range(-n, n + 1)])
@@ -300,6 +452,18 @@ def _esprit_muni2q(order: int, ni: int, mu: int) -> tuple[np.ndarray, np.ndarray
 
 
 def _esprit_getWnimu(order: int, mm: int, ni: int, mu: int) -> np.ndarray:
+    """Usage:
+        Run esprit getWnimu.
+    
+    Args:
+        order: int.
+        mm: int.
+        ni: int.
+        mu: int.
+    
+    Returns:
+        np.ndarray.
+    """
     nm = []
     for n in range(order):
         nm.extend([(n, m) for m in range(-n, n + 1)])
@@ -315,6 +479,17 @@ def _esprit_getWnimu(order: int, mm: int, ni: int, mu: int) -> np.ndarray:
 
 
 def _esprit_getVnimu(order: int, ni: int, mu: int) -> np.ndarray:
+    """Usage:
+        Run esprit getVnimu.
+    
+    Args:
+        order: int.
+        ni: int.
+        mu: int.
+    
+    Returns:
+        np.ndarray.
+    """
     nm = []
     for n in range(order):
         nm.extend([(n, m) for m in range(-n, n + 1)])
@@ -327,6 +502,18 @@ def _esprit_getVnimu(order: int, ni: int, mu: int) -> np.ndarray:
 
 
 def _esprit_getPsi(Us: np.ndarray, LambdaXYp: np.ndarray, LambdaXYm: np.ndarray, LambdaZ: np.ndarray):
+    """Usage:
+        Run esprit getPsi.
+    
+    Args:
+        Us: np.ndarray.
+        LambdaXYp: np.ndarray.
+        LambdaXYm: np.ndarray.
+        LambdaZ: np.ndarray.
+    
+    Returns:
+        value.
+    """
     pinvUs = np.linalg.pinv(_esprit_getYnimu(Us.T, 0, 0).T)
     PsiXYp = pinvUs @ LambdaXYp
     PsiXYm = pinvUs @ LambdaXYm
@@ -335,6 +522,15 @@ def _esprit_getPsi(Us: np.ndarray, LambdaXYp: np.ndarray, LambdaXYm: np.ndarray,
 
 
 def _esprit_getLambda(Us: np.ndarray):
+    """Usage:
+        Run esprit getLambda.
+    
+    Args:
+        Us: np.ndarray.
+    
+    Returns:
+        value.
+    """
     order = int(round(np.sqrt(Us.shape[0]) - 1))
     LambdaXYp = (
         _esprit_getWnimu(order, 1, 1, -1) @ _esprit_getYnimu(Us.T, 1, -1).T
@@ -352,6 +548,17 @@ def _esprit_getLambda(Us: np.ndarray):
 
 
 def _von_mises_peaks(power: np.ndarray, grid_dirs: np.ndarray, nSrc: int) -> np.ndarray:
+    """Usage:
+        Run von mises peaks.
+    
+    Args:
+        power: np.ndarray.
+        grid_dirs: np.ndarray.
+        nSrc: int.
+    
+    Returns:
+        np.ndarray.
+    """
     kappa = 20.0
     grid_xyz = unit_sph_to_cart(grid_dirs[:, 0], grid_dirs[:, 1], convention="az_el")
     p_minus = power.astype(float).copy()

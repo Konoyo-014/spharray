@@ -1,3 +1,9 @@
+"""Example module.
+
+Usage:
+    python examples/core/basic_usage.py
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -7,6 +13,12 @@ from spherical_array_processing.sh import SHBasisSpec, matrix
 
 
 def main() -> None:
+    """Usage:
+        Run main.
+    
+    Returns:
+        None.
+    """
     grid = fibonacci_grid(64)
     spec = SHBasisSpec(max_order=3, basis="complex", angle_convention="az_colat")
     y = matrix(spec, grid)

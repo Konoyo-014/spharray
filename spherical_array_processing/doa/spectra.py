@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.doa.spectra import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -8,6 +14,16 @@ from ..types import SHBasisSpec, SpatialSpectrumResult, SphericalGrid
 
 
 def peak_pick_spectrum(spectrum: ArrayLike, n_peaks: int) -> np.ndarray:
+    """Usage:
+        Run peak pick spectrum.
+    
+    Args:
+        spectrum: ArrayLike.
+        n_peaks: int.
+    
+    Returns:
+        np.ndarray.
+    """
     s = np.asarray(spectrum, dtype=float).reshape(-1)
     n = max(1, min(n_peaks, s.size))
     idx = np.argpartition(s, -n)[-n:]
@@ -16,6 +32,18 @@ def peak_pick_spectrum(spectrum: ArrayLike, n_peaks: int) -> np.ndarray:
 
 
 def spatial_spectrum_from_map(spectrum: ArrayLike, grid: SphericalGrid, n_peaks: int, metadata: dict | None = None) -> SpatialSpectrumResult:
+    """Usage:
+        Run spatial spectrum from map.
+    
+    Args:
+        spectrum: ArrayLike.
+        grid: SphericalGrid.
+        n_peaks: int.
+        metadata: dict | None, default=None.
+    
+    Returns:
+        SpatialSpectrumResult.
+    """
     s = np.asarray(spectrum, dtype=float).reshape(-1)
     idx = peak_pick_spectrum(s, n_peaks)
     dirs = np.stack([grid.azimuth[idx], grid.elevation[idx]], axis=1)
@@ -29,6 +57,18 @@ def spatial_spectrum_from_map(spectrum: ArrayLike, grid: SphericalGrid, n_peaks:
 
 
 def pwd_spectrum(cov: ArrayLike, grid: SphericalGrid, basis: SHBasisSpec, n_peaks: int = 1) -> SpatialSpectrumResult:
+    """Usage:
+        Run pwd spectrum.
+    
+    Args:
+        cov: ArrayLike.
+        grid: SphericalGrid.
+        basis: SHBasisSpec.
+        n_peaks: int, default=1.
+    
+    Returns:
+        SpatialSpectrumResult.
+    """
     r = np.asarray(cov, dtype=np.complex128)
     y = np.asarray(sh_matrix(basis, grid))
     if y.ndim != 2:
@@ -40,6 +80,19 @@ def pwd_spectrum(cov: ArrayLike, grid: SphericalGrid, basis: SHBasisSpec, n_peak
 
 
 def music_spectrum(cov: ArrayLike, grid: SphericalGrid, basis: SHBasisSpec, n_sources: int, n_peaks: int | None = None) -> SpatialSpectrumResult:
+    """Usage:
+        Run music spectrum.
+    
+    Args:
+        cov: ArrayLike.
+        grid: SphericalGrid.
+        basis: SHBasisSpec.
+        n_sources: int.
+        n_peaks: int | None, default=None.
+    
+    Returns:
+        SpatialSpectrumResult.
+    """
     r = np.asarray(cov, dtype=np.complex128)
     evals, evecs = np.linalg.eigh(r)
     order = np.argsort(evals.real)

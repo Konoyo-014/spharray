@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.plotting.spatial_helpers import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -9,6 +15,17 @@ from ..coords import sph_to_cart
 
 
 def plot_mic_array(mic_dirs_deg: ArrayLike, radius_m: float, ax: Axes | None = None) -> Axes:
+    """Usage:
+        Run plot mic array.
+    
+    Args:
+        mic_dirs_deg: ArrayLike.
+        radius_m: float.
+        ax: Axes | None, default=None.
+    
+    Returns:
+        Axes.
+    """
     dirs = np.asarray(mic_dirs_deg, dtype=float)
     if dirs.ndim != 2 or dirs.shape[1] != 2:
         raise ValueError("mic_dirs_deg must be [M,2] in [az_deg, el_deg]")
@@ -38,6 +55,20 @@ def plot_directional_map_from_grid(
     polar_or_elev: str = "elev",
     zeroed_or_centered: str = "centered",
 ) -> Axes:
+    """Usage:
+        Run plot directional map from grid.
+    
+    Args:
+        fgrid: ArrayLike.
+        azi_res_deg: float.
+        polar_res_deg: float.
+        ax: Axes | None, default=None.
+        polar_or_elev: str, default='elev'.
+        zeroed_or_centered: str, default='centered'.
+    
+    Returns:
+        Axes.
+    """
     vals = np.asarray(fgrid, dtype=float).reshape(-1)
     n_azi = int(round(360 / azi_res_deg)) + 1
     n_pol = int(round(180 / polar_res_deg)) + 1

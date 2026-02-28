@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.toolkit.harmonics.math import <symbol>
+"""
+
 from __future__ import annotations
 
 import math
@@ -41,19 +47,61 @@ def sh2(order: int, theta: ArrayLike, phi: ArrayLike) -> np.ndarray:
 
 
 def bn(order: int, kr: ArrayLike, ka: ArrayLike, sphere: int | str) -> np.ndarray:
+    """Usage:
+        Run bn.
+    
+    Args:
+        order: int.
+        kr: ArrayLike.
+        ka: ArrayLike.
+        sphere: int | str.
+    
+    Returns:
+        np.ndarray.
+    """
     return _bn(order, kr=kr, ka=ka, sphere=sphere)
 
 
 def bn_mat(order: int, kr: ArrayLike, ka: ArrayLike, sphere: int | str) -> np.ndarray:
+    """Usage:
+        Run bn mat.
+    
+    Args:
+        order: int.
+        kr: ArrayLike.
+        ka: ArrayLike.
+        sphere: int | str.
+    
+    Returns:
+        np.ndarray.
+    """
     return _bn_matrix(order, kr=kr, ka=ka, sphere=sphere, repeat_per_order=True)
 
 
 def chebyshev_coefficients(order: int) -> np.ndarray:
+    """Usage:
+        Run chebyshev coefficients.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     coeffs = np.polynomial.chebyshev.Chebyshev.basis(order).convert(kind=np.polynomial.Polynomial).coef
     return coeffs[::-1]
 
 
 def legendre_coefficients(order: int) -> np.ndarray:
+    """Usage:
+        Run legendre coefficients.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        np.ndarray.
+    """
     out = np.zeros(order + 1, dtype=float)
     for r in range(order // 2 + 1):
         out[2 * r] = (
@@ -90,6 +138,15 @@ def wigner_d_matrix(order: int, alpha: float, beta: float, gamma: float) -> np.n
 
 
 def derivative_ph(vnm: ArrayLike) -> np.ndarray:
+    """Usage:
+        Run derivative ph.
+    
+    Args:
+        vnm: ArrayLike.
+    
+    Returns:
+        np.ndarray.
+    """
     v = np.asarray(vnm, dtype=np.complex128).reshape(-1)
     n = int(round(np.sqrt(v.size) - 1))
     if (n + 1) ** 2 != v.size:
@@ -103,6 +160,17 @@ def derivative_ph(vnm: ArrayLike) -> np.ndarray:
 
 
 def derivative_th(vnm: ArrayLike, th: float, ph: float) -> np.ndarray:
+    """Usage:
+        Run derivative th.
+    
+    Args:
+        vnm: ArrayLike.
+        th: float.
+        ph: float.
+    
+    Returns:
+        np.ndarray.
+    """
     v = np.asarray(vnm, dtype=np.complex128).reshape(-1)
     n = int(round(np.sqrt(v.size) - 1))
     if (n + 1) ** 2 != v.size:
@@ -123,11 +191,33 @@ def derivative_th(vnm: ArrayLike, th: float, ph: float) -> np.ndarray:
 
 def c2s(x: ArrayLike, y: ArrayLike, z: ArrayLike) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     # Harmonics names: theta=colatitude, phi=azimuth
+    """Usage:
+        Run c2s.
+    
+    Args:
+        x: ArrayLike.
+        y: ArrayLike.
+        z: ArrayLike.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray, np.ndarray].
+    """
     phi, theta, r = cart_to_sph(x, y, z, convention="az_colat")
     return theta, phi, r
 
 
 def s2c(theta: ArrayLike, phi: ArrayLike, r: ArrayLike) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Usage:
+        Run s2c.
+    
+    Args:
+        theta: ArrayLike.
+        phi: ArrayLike.
+        r: ArrayLike.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray, np.ndarray].
+    """
     return sph_to_cart(phi, theta, r, convention="az_colat")
 
 
@@ -149,6 +239,15 @@ def equiangle_sampling(order: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
 
 
 def gaussian_sampling(order: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Usage:
+        Run gaussian sampling.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray, np.ndarray].
+    """
     roots = np.roots(legendre_coefficients(order + 1))
     x = np.sort(np.real_if_close(roots))
     th = np.arccos(np.clip(x, -1.0, 1.0))
@@ -164,6 +263,15 @@ def gaussian_sampling(order: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
 
 def uniform_sampling(order: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     # Fallback near-uniform sampling (not exact t-design tables for all N)
+    """Usage:
+        Run uniform sampling.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        tuple[np.ndarray, np.ndarray, np.ndarray].
+    """
     n_points = {
         2: 12,
         3: 32,

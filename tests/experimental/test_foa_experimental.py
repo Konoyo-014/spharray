@@ -1,9 +1,21 @@
+"""Test module.
+
+Usage:
+    pytest -q tests/experimental/test_foa_experimental.py
+"""
+
 import numpy as np
 
 from spherical_array_processing.experimental import estimate_incomplete_foa_from_stereo
 
 
 def test_stereo_to_incomplete_foa_interface():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     fs = 16000
     t = np.arange(fs) / fs
     left = np.sin(2 * np.pi * 440 * t)
@@ -19,6 +31,12 @@ def test_stereo_to_incomplete_foa_interface():
 
 
 def test_stereo_to_incomplete_foa_low_frequency_stability():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     fs = 16000
     t = np.arange(fs) / fs
     # Dominantly low-frequency content should produce conservative confidence.

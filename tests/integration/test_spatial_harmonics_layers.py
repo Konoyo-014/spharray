@@ -1,3 +1,9 @@
+"""Test module.
+
+Usage:
+    pytest -q tests/integration/test_spatial_harmonics_layers.py
+"""
+
 import numpy as np
 import matplotlib
 
@@ -69,6 +75,12 @@ from spherical_array_processing.toolkit.harmonics import (
 
 
 def test_sorted_eig_descend():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     x = np.diag([1.0, 3.0, 2.0])
     v, s = sorted_eig(x, "descend")
     vals = np.diag(s).real
@@ -77,6 +89,12 @@ def test_sorted_eig_descend():
 
 
 def test_spatial_noise_functions_shapes():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     f = np.linspace(100, 1000, 8)
     g2, g2_lin = sph_array_noise(0.042, 32, 3, "rigid", f)
     th = sph_array_noise_threshold(0.042, 32, 10.0, 3, "rigid")
@@ -86,6 +104,12 @@ def test_spatial_noise_functions_shapes():
 
 
 def test_spatial_alias_limit_outputs():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     dirs = np.stack([np.linspace(0, 2 * np.pi, 32, endpoint=False), np.zeros(32)], axis=1)
     f_alias, cond = sph_array_alias_lim(0.042, 32, 4, dirs)
     assert f_alias.shape == (3,)
@@ -93,6 +117,12 @@ def test_spatial_alias_limit_outputs():
 
 
 def test_differential_to_spherical_conversion_runs():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     a = beam_weights_cardioid_to_differential(2)
     b = beam_weights_differential_to_spherical(a)
     assert b.shape == (3,)
@@ -100,6 +130,12 @@ def test_differential_to_spherical_conversion_runs():
 
 
 def test_harmonics_math_shapes():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     th = np.array([0.1, 0.2, -0.3])
     ph = np.array([0.2, -0.4, 0.7])
     y = sh2(2, th, ph)
@@ -117,6 +153,12 @@ def test_harmonics_math_shapes():
 
 
 def test_polynomial_coeff_helpers():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     tc = chebyshev_coefficients(2)
     lc = legendre_coefficients(2)
     # T2 = 2x^2 - 1  (descending order)
@@ -126,6 +168,12 @@ def test_polynomial_coeff_helpers():
 
 
 def test_platonic_solid_radius():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     v, f = platonic_solid(4, radius=2.0)
     r = np.linalg.norm(v, axis=1)
     assert np.allclose(r, 2.0)
@@ -133,6 +181,12 @@ def test_platonic_solid_radius():
 
 
 def test_spatial_wrapper_doa_and_diffuseness_interfaces():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     order = 1
     n = (order + 1) ** 2
     cov = np.eye(n, dtype=complex)
@@ -161,6 +215,12 @@ def test_spatial_wrapper_doa_and_diffuseness_interfaces():
 
 
 def test_spatial_nullformers_and_pv_matrix():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     w_pwd = sphNullformer_pwd(1, np.array([[0.0, 0.0], [np.pi / 2, 0.0]]))
     w_diff = sphNullformer_diff(1, np.array([[0.0, 0.0]]))
     m_real = beam_weights_pressure_velocity("real")
@@ -173,6 +233,12 @@ def test_spatial_nullformers_and_pv_matrix():
 
 def test_spatial_diffcoh_and_encoding_filters_shapes():
     # synthetic array response [bins,mics,grid]
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     H = np.ones((5, 4, 10), dtype=np.complex128)
     d_meas = getDiffCohMtxMeas(H)
     dirs = np.stack([np.linspace(0, 2 * np.pi, 4, endpoint=False), np.zeros(4)], axis=1)
@@ -202,6 +268,12 @@ def test_spatial_diffcoh_and_encoding_filters_shapes():
 
 
 def test_spatial_sparse_recovery_wrappers():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     rng = np.random.default_rng(0)
     M, K, T = 4, 12, 6
     A = rng.normal(size=(M, K))
@@ -230,6 +302,12 @@ def test_spatial_sparse_recovery_wrappers():
 
 
 def test_spatial_more_weight_and_eval_helpers():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     d = beamWeightsDolphChebyshev2Spherical(2, "sidelobe", 0.1)
     b_lin = beamWeightsLinear2Spherical(np.array([1.0, 0.5, 0.25]))
     b_fun = beamWeightsFromFunction(lambda az, el: np.ones_like(az), order=1)
@@ -251,6 +329,12 @@ def test_spatial_more_weight_and_eval_helpers():
 
 
 def test_spatial_poly_axisym_helpers():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     tc = returnChebyPolyCoeffs(3)
     lc = returnLegePolyCoeffs(3)
     assert tc.shape == (4, 1)
@@ -266,6 +350,12 @@ def test_spatial_poly_axisym_helpers():
 
 
 def test_spatial_remaining_aliases_and_numerical_helpers():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     a = beamWeightsCardioid2Differential(2)
     b = beamWeightsCardioid2Spherical(2)
     c = beamWeightsDifferential2Spherical(a)
@@ -297,6 +387,12 @@ def test_spatial_remaining_aliases_and_numerical_helpers():
 
 
 def test_spatial_differential_gains_table():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     gains = differentialGains()
     assert set(gains.keys()) == {"cardioid", "supercardioid", "hypercardioid"}
     for family, table in gains.items():

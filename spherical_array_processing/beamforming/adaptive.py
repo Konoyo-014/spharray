@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.beamforming.adaptive import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -5,6 +11,17 @@ from numpy.typing import ArrayLike
 
 
 def mvdr_weights(cov: ArrayLike, steering: ArrayLike, diagonal_loading: float = 1e-8) -> np.ndarray:
+    """Usage:
+        Run mvdr weights.
+    
+    Args:
+        cov: ArrayLike.
+        steering: ArrayLike.
+        diagonal_loading: float, default=1e-08.
+    
+    Returns:
+        np.ndarray.
+    """
     r = np.asarray(cov, dtype=np.complex128)
     d = np.asarray(steering, dtype=np.complex128)
     if r.ndim != 2 or r.shape[0] != r.shape[1]:
@@ -26,6 +43,18 @@ def lcmv_weights(
     response: ArrayLike,
     diagonal_loading: float = 1e-8,
 ) -> np.ndarray:
+    """Usage:
+        Run lcmv weights.
+    
+    Args:
+        cov: ArrayLike.
+        constraint_matrix: ArrayLike.
+        response: ArrayLike.
+        diagonal_loading: float, default=1e-08.
+    
+    Returns:
+        np.ndarray.
+    """
     r = np.asarray(cov, dtype=np.complex128)
     c = np.asarray(constraint_matrix, dtype=np.complex128)
     f = np.asarray(response, dtype=np.complex128).reshape(-1, 1)

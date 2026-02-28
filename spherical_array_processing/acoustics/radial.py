@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.acoustics.radial import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -8,18 +14,57 @@ from ..sh.basis import replicate_per_order
 
 
 def _a(x: ArrayLike) -> NDArray[np.float64]:
+    """Usage:
+        Run a.
+    
+    Args:
+        x: ArrayLike.
+    
+    Returns:
+        NDArray[np.float64].
+    """
     return np.asarray(x, dtype=float)
 
 
 def besseljs(n: int | ArrayLike, x: ArrayLike) -> NDArray[np.float64]:
+    """Usage:
+        Run besseljs.
+    
+    Args:
+        n: int | ArrayLike.
+        x: ArrayLike.
+    
+    Returns:
+        NDArray[np.float64].
+    """
     return spherical_jn(n, _a(x))
 
 
 def besseljsd(n: int | ArrayLike, x: ArrayLike) -> NDArray[np.float64]:
+    """Usage:
+        Run besseljsd.
+    
+    Args:
+        n: int | ArrayLike.
+        x: ArrayLike.
+    
+    Returns:
+        NDArray[np.float64].
+    """
     return spherical_jn(n, _a(x), derivative=True)
 
 
 def besselhs(n: int | ArrayLike, x: ArrayLike) -> NDArray[np.complex128]:
+    """Usage:
+        Run besselhs.
+    
+    Args:
+        n: int | ArrayLike.
+        x: ArrayLike.
+    
+    Returns:
+        NDArray[np.complex128].
+    """
     x = _a(x)
     with np.errstate(all="ignore"):
         y = spherical_jn(n, x) + 1j * spherical_yn(n, x)
@@ -27,6 +72,16 @@ def besselhs(n: int | ArrayLike, x: ArrayLike) -> NDArray[np.complex128]:
 
 
 def besselhsd(n: int | ArrayLike, x: ArrayLike) -> NDArray[np.complex128]:
+    """Usage:
+        Run besselhsd.
+    
+    Args:
+        n: int | ArrayLike.
+        x: ArrayLike.
+    
+    Returns:
+        NDArray[np.complex128].
+    """
     x = _a(x)
     with np.errstate(all="ignore"):
         y = spherical_jn(n, x, derivative=True) + 1j * spherical_yn(n, x, derivative=True)
@@ -58,6 +113,19 @@ def plane_wave_radial_bn(n: int, kr: ArrayLike, ka: ArrayLike | None = None, sph
 
 
 def bn_matrix(max_order: int, kr: ArrayLike, ka: ArrayLike | None = None, sphere: int | str = 1, repeat_per_order: bool = True) -> NDArray[np.complex128]:
+    """Usage:
+        Run bn matrix.
+    
+    Args:
+        max_order: int.
+        kr: ArrayLike.
+        ka: ArrayLike | None, default=None.
+        sphere: int | str, default=1.
+        repeat_per_order: bool, default=True.
+    
+    Returns:
+        NDArray[np.complex128].
+    """
     kr_arr = _a(kr).reshape(-1)
     rows: list[NDArray[np.complex128]] = []
     for n in range(max_order + 1):
@@ -76,5 +144,16 @@ def bn_matrix(max_order: int, kr: ArrayLike, ka: ArrayLike | None = None, sphere
 
 
 def sph_modal_coeffs(max_order: int, kR: ArrayLike, array_type: str = "rigid") -> NDArray[np.complex128]:
+    """Usage:
+        Run sph modal coeffs.
+    
+    Args:
+        max_order: int.
+        kR: ArrayLike.
+        array_type: str, default='rigid'.
+    
+    Returns:
+        NDArray[np.complex128].
+    """
     sphere = {"open": 0, "rigid": 1, "cardioid": 2}.get(array_type, 1)
     return bn_matrix(max_order, kR, ka=kR, sphere=sphere, repeat_per_order=False)

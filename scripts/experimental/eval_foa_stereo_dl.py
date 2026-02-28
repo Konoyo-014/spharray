@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""Executable helper script.
+
+Usage:
+    python scripts/experimental/eval_foa_stereo_dl.py
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -16,6 +22,16 @@ from spherical_array_processing.experimental import StereoFOADLConfig, estimate_
 
 
 def _build_stereo_eval_signal(fs: int, seconds: float) -> np.ndarray:
+    """Usage:
+        Run build stereo eval signal.
+    
+    Args:
+        fs: int.
+        seconds: float.
+    
+    Returns:
+        np.ndarray.
+    """
     n = int(fs * seconds)
     t = np.arange(n, dtype=float) / fs
     left = (
@@ -32,6 +48,15 @@ def _build_stereo_eval_signal(fs: int, seconds: float) -> np.ndarray:
 
 
 def _summarize(est) -> dict[str, float]:
+    """Usage:
+        Run summarize.
+    
+    Args:
+        est: value.
+    
+    Returns:
+        dict[str, float].
+    """
     w = est.foa_stft[0]
     x = est.foa_stft[1]
     y = est.foa_stft[2]
@@ -48,6 +73,15 @@ def _summarize(est) -> dict[str, float]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Usage:
+        Run main.
+    
+    Args:
+        argv: list[str] | None, default=None.
+    
+    Returns:
+        int.
+    """
     parser = argparse.ArgumentParser(description="Evaluate stereo->FOA DL estimator on deterministic synthetic audio.")
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=Path("artifacts/foa_dl/eval_metrics.json"))

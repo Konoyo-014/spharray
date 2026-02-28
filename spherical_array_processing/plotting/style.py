@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.plotting.style import <symbol>
+"""
+
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -8,6 +14,15 @@ from ..types import FigureStyleConfig
 
 
 def apply_matlab_like_style(config: FigureStyleConfig | None = None) -> None:
+    """Usage:
+        Run apply matlab like style.
+    
+    Args:
+        config: FigureStyleConfig | None, default=None.
+    
+    Returns:
+        None.
+    """
     cfg = config or FigureStyleConfig()
     mpl.rcParams.update(
         {
@@ -26,6 +41,15 @@ def apply_matlab_like_style(config: FigureStyleConfig | None = None) -> None:
 
 @contextmanager
 def figure_style_context(config: FigureStyleConfig | None = None):
+    """Usage:
+        Run figure style context.
+    
+    Args:
+        config: FigureStyleConfig | None, default=None.
+    
+    Returns:
+        value.
+    """
     old = mpl.rcParams.copy()
     apply_matlab_like_style(config)
     try:

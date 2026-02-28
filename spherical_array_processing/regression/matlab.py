@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.regression.matlab import <symbol>
+"""
+
 from __future__ import annotations
 
 import os
@@ -9,18 +15,27 @@ from pathlib import Path
 
 @dataclass
 class MatlabRuntime:
+    """Usage:
+        Instantiate `MatlabRuntime` to work with MatlabRuntime.
+    """
     executable: str
     source: str
 
 
 @dataclass
 class OctaveRuntime:
+    """Usage:
+        Instantiate `OctaveRuntime` to work with OctaveRuntime.
+    """
     executable: str
     source: str
 
 
 @dataclass
 class MatlabProbeResult:
+    """Usage:
+        Instantiate `MatlabProbeResult` to work with MatlabProbeResult.
+    """
     status: str  # ok | login_required | timeout | error | not_found
     message: str
     stdout_tail: str = ""
@@ -28,6 +43,12 @@ class MatlabProbeResult:
 
 
 def _search_standard_matlab_macos() -> MatlabRuntime | None:
+    """Usage:
+        Run search standard matlab macos.
+    
+    Returns:
+        MatlabRuntime | None.
+    """
     apps = Path("/Applications")
     if not apps.exists():
         return None
@@ -39,6 +60,12 @@ def _search_standard_matlab_macos() -> MatlabRuntime | None:
 
 
 def detect_matlab() -> MatlabRuntime | None:
+    """Usage:
+        Run detect matlab.
+    
+    Returns:
+        MatlabRuntime | None.
+    """
     env_bin = os.environ.get("MATLAB_BIN")
     if env_bin and Path(env_bin).exists():
         return MatlabRuntime(executable=env_bin, source="MATLAB_BIN")
@@ -55,10 +82,22 @@ def detect_matlab() -> MatlabRuntime | None:
 
 
 def matlab_available() -> bool:
+    """Usage:
+        Run matlab available.
+    
+    Returns:
+        bool.
+    """
     return detect_matlab() is not None
 
 
 def detect_octave() -> OctaveRuntime | None:
+    """Usage:
+        Run detect octave.
+    
+    Returns:
+        OctaveRuntime | None.
+    """
     env_bin = os.environ.get("OCTAVE_BIN")
     if env_bin and Path(env_bin).exists():
         return OctaveRuntime(executable=env_bin, source="OCTAVE_BIN")
@@ -69,6 +108,17 @@ def detect_octave() -> OctaveRuntime | None:
 
 
 def run_matlab_batch(script: str, cwd: str | Path | None = None, timeout_s: int = 600) -> subprocess.CompletedProcess[str]:
+    """Usage:
+        Run run matlab batch.
+    
+    Args:
+        script: str.
+        cwd: str | Path | None, default=None.
+        timeout_s: int, default=600.
+    
+    Returns:
+        subprocess.CompletedProcess[str].
+    """
     rt = detect_matlab()
     if rt is None:
         raise RuntimeError("MATLAB not found. Set MATLAB_BIN or MATLAB_ROOT.")
@@ -126,6 +176,17 @@ def probe_matlab_cli(timeout_s: int = 15) -> MatlabProbeResult:
 
 
 def run_octave_eval(expr: str, cwd: str | Path | None = None, timeout_s: int = 600) -> subprocess.CompletedProcess[str]:
+    """Usage:
+        Run run octave eval.
+    
+    Args:
+        expr: str.
+        cwd: str | Path | None, default=None.
+        timeout_s: int, default=600.
+    
+    Returns:
+        subprocess.CompletedProcess[str].
+    """
     rt = detect_octave()
     if rt is None:
         raise RuntimeError("Octave not found. Set OCTAVE_BIN or add octave to PATH.")

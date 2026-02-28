@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.sh.basis import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -13,10 +19,30 @@ from ..types import SHBasisSpec, SphericalGrid
 
 
 def acn_index(n: int, m: int) -> int:
+    """Usage:
+        Run acn index.
+    
+    Args:
+        n: int.
+        m: int.
+    
+    Returns:
+        int.
+    """
     return n * (n + 1) + m
 
 
 def _norm_scale(n: int, normalization: str) -> float:
+    """Usage:
+        Run norm scale.
+    
+    Args:
+        n: int.
+        normalization: str.
+    
+    Returns:
+        float.
+    """
     if normalization == "orthonormal":
         return 1.0
     if normalization == "sn3d":
@@ -27,6 +53,15 @@ def _norm_scale(n: int, normalization: str) -> float:
 
 
 def _grid_to_az_colat(grid: SphericalGrid) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
+    """Usage:
+        Run grid to az colat.
+    
+    Args:
+        grid: SphericalGrid.
+    
+    Returns:
+        tuple[NDArray[np.float64], NDArray[np.float64]].
+    """
     if grid.convention == "az_colat":
         return grid.azimuth, grid.angle2
     return azel_to_az_colat(grid.azimuth, grid.angle2)
@@ -36,6 +71,16 @@ def complex_matrix(
     spec: SHBasisSpec,
     grid: SphericalGrid,
 ) -> NDArray[np.complex128]:
+    """Usage:
+        Run complex matrix.
+    
+    Args:
+        spec: SHBasisSpec.
+        grid: SphericalGrid.
+    
+    Returns:
+        NDArray[np.complex128].
+    """
     if spec.angle_convention not in {"az_el", "az_colat"}:
         raise ValueError(f"unsupported angle convention: {spec.angle_convention}")
     az, colat = _grid_to_az_colat(grid)
@@ -49,6 +94,16 @@ def complex_matrix(
 
 
 def real_matrix(spec: SHBasisSpec, grid: SphericalGrid) -> NDArray[np.float64]:
+    """Usage:
+        Run real matrix.
+    
+    Args:
+        spec: SHBasisSpec.
+        grid: SphericalGrid.
+    
+    Returns:
+        NDArray[np.float64].
+    """
     yc = complex_matrix(
         SHBasisSpec(
             max_order=spec.max_order,
@@ -72,6 +127,16 @@ def real_matrix(spec: SHBasisSpec, grid: SphericalGrid) -> NDArray[np.float64]:
 
 
 def matrix(spec: SHBasisSpec, grid: SphericalGrid) -> NDArray[np.complex128] | NDArray[np.float64]:
+    """Usage:
+        Run matrix.
+    
+    Args:
+        spec: SHBasisSpec.
+        grid: SphericalGrid.
+    
+    Returns:
+        NDArray[np.complex128] | NDArray[np.float64].
+    """
     if spec.basis == "complex":
         return complex_matrix(spec, grid)
     if spec.basis == "real":
@@ -80,6 +145,15 @@ def matrix(spec: SHBasisSpec, grid: SphericalGrid) -> NDArray[np.complex128] | N
 
 
 def replicate_per_order(values: ArrayLike) -> NDArray[np.float64]:
+    """Usage:
+        Run replicate per order.
+    
+    Args:
+        values: ArrayLike.
+    
+    Returns:
+        NDArray[np.float64].
+    """
     vals = np.asarray(values, dtype=float).reshape(-1)
     out = []
     for n, v in enumerate(vals):
@@ -88,6 +162,17 @@ def replicate_per_order(values: ArrayLike) -> NDArray[np.float64]:
 
 
 def complex_to_real_coeffs(coeffs: ArrayLike, max_order: int, axis: int = -1) -> NDArray[np.float64]:
+    """Usage:
+        Run complex to real coeffs.
+    
+    Args:
+        coeffs: ArrayLike.
+        max_order: int.
+        axis: int, default=-1.
+    
+    Returns:
+        NDArray[np.float64].
+    """
     c = np.asarray(coeffs, dtype=np.complex128)
     c = np.moveaxis(c, axis, -1)
     if c.shape[-1] != (max_order + 1) ** 2:

@@ -1,9 +1,21 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.toolkit._resource_paths import <symbol>
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
 
 
 def _package_resource_root() -> Path:
+    """Usage:
+        Run package resource root.
+    
+    Returns:
+        Path.
+    """
     return Path(__file__).resolve().parents[1] / "resources"
 
 

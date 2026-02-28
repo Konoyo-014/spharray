@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.array.sampling import <symbol>
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -6,6 +12,15 @@ from ..types import SphericalGrid
 
 
 def fibonacci_grid(n_points: int) -> SphericalGrid:
+    """Usage:
+        Run fibonacci grid.
+    
+    Args:
+        n_points: int.
+    
+    Returns:
+        SphericalGrid.
+    """
     if n_points < 1:
         raise ValueError("n_points must be positive")
     i = np.arange(n_points)
@@ -18,12 +33,31 @@ def fibonacci_grid(n_points: int) -> SphericalGrid:
 
 
 def get_tdesign_fallback(order: int, n_points: int | None = None) -> SphericalGrid:
+    """Usage:
+        Run get tdesign fallback.
+    
+    Args:
+        order: int.
+        n_points: int | None, default=None.
+    
+    Returns:
+        SphericalGrid.
+    """
     if n_points is None:
         n_points = max(2 * (order + 1) ** 2, 32)
     return fibonacci_grid(n_points)
 
 
 def equiangle_sampling(order: int) -> SphericalGrid:
+    """Usage:
+        Run equiangle sampling.
+    
+    Args:
+        order: int.
+    
+    Returns:
+        SphericalGrid.
+    """
     n_theta = 2 * (order + 1)
     n_phi = 2 * n_theta
     colat = np.linspace(0.0, np.pi, n_theta, endpoint=True)

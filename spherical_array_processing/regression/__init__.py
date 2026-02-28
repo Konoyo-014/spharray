@@ -1,3 +1,9 @@
+"""Library module.
+
+Usage:
+    from spherical_array_processing.regression import <symbol>
+"""
+
 from .matlab import (
     detect_matlab,
     detect_octave,

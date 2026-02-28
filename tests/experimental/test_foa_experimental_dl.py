@@ -1,3 +1,9 @@
+"""Test module.
+
+Usage:
+    pytest -q tests/experimental/test_foa_experimental_dl.py
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -6,6 +12,16 @@ from spherical_array_processing.experimental import StereoFOADLConfig, estimate_
 
 
 def _synthetic_stereo(fs: int = 16000, seconds: float = 1.0) -> np.ndarray:
+    """Usage:
+        Run synthetic stereo.
+    
+    Args:
+        fs: int, default=16000.
+        seconds: float, default=1.0.
+    
+    Returns:
+        np.ndarray.
+    """
     n = int(fs * seconds)
     t = np.arange(n, dtype=float) / fs
     l = 0.8 * np.sin(2 * np.pi * 440 * t) + 0.2 * np.sin(2 * np.pi * 900 * t + 0.3)
@@ -14,6 +30,12 @@ def _synthetic_stereo(fs: int = 16000, seconds: float = 1.0) -> np.ndarray:
 
 
 def test_stereo_to_foa_dl_fallback_mode():
+    """Usage:
+        Run this test case.
+    
+    Returns:
+        value.
+    """
     x = _synthetic_stereo()
     est = estimate_incomplete_foa_from_stereo_dl(x, fs=16000.0, config=StereoFOADLConfig(checkpoint_path=None))
     assert est.foa_stft.shape[0] == 4
@@ -24,6 +46,15 @@ def test_stereo_to_foa_dl_fallback_mode():
 
 
 def test_stereo_to_foa_dl_with_checkpoint(tmp_path):
+    """Usage:
+        Run this test case.
+    
+    Args:
+        tmp_path: value.
+    
+    Returns:
+        value.
+    """
     rng = np.random.default_rng(0)
     w = rng.normal(scale=0.1, size=(8, 8))
     b = rng.normal(scale=0.01, size=(8,))
