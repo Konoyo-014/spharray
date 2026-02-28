@@ -14,8 +14,8 @@ This package targets **Python 3.11+**.
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -U pip
-pip install -e ".[dev,image]"
-pytest -q
+pip install -e ".[image]"
+python -c "from spherical_array_processing.toolkit import sht; print(sht.getFliegeNodes(2)[0].shape)"
 ```
 
 ## Packaging Check
@@ -33,9 +33,7 @@ The open-source repository now keeps a small layered structure:
 
 `spherical_array_processing/` contains the installable library.
 
-`tests/` is layered by purpose (`core/`, `integration/`, `plotting/`, `experimental/`).
-
-`scripts/experimental/` contains optional FOA training/evaluation helper scripts.
+`scripts/` contains lightweight package-level helper entrypoints only.
 
 ## Self-Contained Toolkit Layer
 
