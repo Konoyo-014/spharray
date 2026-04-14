@@ -1,11 +1,16 @@
-"""Library module.
+"""Plotting and visualisation utilities.
 
-Usage:
-    from spherical_array_processing.plotting import <symbol>
+Examples
+--------
+>>> import matplotlib
+>>> matplotlib.use("Agg")
+>>> from spherical_array_processing.plotting import (
+...     apply_matlab_like_style, figure_style_context, plot_mic_array,
+... )
 """
 
-from .style import apply_matlab_like_style, figure_style_context
 from .spatial_helpers import plot_directional_map_from_grid, plot_mic_array
+from .style import apply_matlab_like_style, figure_style_context
 
 __all__ = [
     "apply_matlab_like_style",

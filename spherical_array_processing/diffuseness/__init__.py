@@ -1,7 +1,17 @@
-"""Library module.
+"""Diffuseness estimators for first-order ambisonic and SH-domain signals.
 
-Usage:
-    from spherical_array_processing.diffuseness import <symbol>
+Examples
+--------
+>>> import numpy as np
+>>> from spherical_array_processing.diffuseness import (
+...     intensity_vectors_from_foa, diffuseness_tv,
+... )
+>>> rng = np.random.default_rng(42)
+>>> foa = rng.standard_normal((200, 4)) + 1j * rng.standard_normal((200, 4))
+>>> I = intensity_vectors_from_foa(foa)
+>>> Psi = diffuseness_tv(I)
+>>> 0.0 <= Psi <= 1.0
+True
 """
 
 from .estimators import (
@@ -19,4 +29,3 @@ __all__ = [
     "diffuseness_tv",
     "intensity_vectors_from_foa",
 ]
-
