@@ -19,8 +19,8 @@ from _bootstrap import bootstrap_repo_import
 
 bootstrap_repo_import()
 
-import spherical_array_processing as sap
-from spherical_array_processing.sh import acn_index
+import spharray as sap
+from spharray.sh import acn_index
 
 
 def main() -> None:

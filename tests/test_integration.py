@@ -15,15 +15,15 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from spherical_array_processing.array.sampling import fibonacci_grid
-from spherical_array_processing.array.simulation import simulate_plane_wave_array_response
-from spherical_array_processing.beamforming.fixed import (
+from spharray.array.sampling import fibonacci_grid
+from spharray.array.simulation import simulate_plane_wave_array_response
+from spharray.beamforming.fixed import (
     axisymmetric_pattern,
     beam_weights_cardioid,
 )
-from spherical_array_processing.doa.spectra import pwd_spectrum
-from spherical_array_processing.sh import direct_sht, inverse_sht, matrix as sh_matrix
-from spherical_array_processing.types import ArrayGeometry, SHBasisSpec, SphericalGrid
+from spharray.doa.spectra import pwd_spectrum
+from spharray.sh import direct_sht, inverse_sht, matrix as sh_matrix
+from spharray.types import ArrayGeometry, SHBasisSpec, SphericalGrid
 
 
 # ---------------------------------------------------------------------------

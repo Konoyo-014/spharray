@@ -13,33 +13,33 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from spherical_array_processing.array.sampling import (
+from spharray.array.sampling import (
     fibonacci_grid,
     max_sh_order,
     spatial_aliasing_frequency,
 )
-from spherical_array_processing.acoustics import (
+from spharray.acoustics import (
     bn_matrix,
     equalize_modal_coeffs,
     sph_modal_coeffs,
 )
-from spherical_array_processing.beamforming import (
+from spharray.beamforming import (
     axisymmetric_pattern,
     beam_weights_hypercardioid,
     beamform_sh,
     steer_sh_weights,
 )
-from spherical_array_processing.coords import (
+from spharray.coords import (
     angular_distance,
     angular_distance_deg,
 )
-from spherical_array_processing.doa import (
+from spharray.doa import (
     diagonal_loading,
     estimate_sh_cov,
     forward_backward_cov,
     pwd_spectrum,
 )
-from spherical_array_processing.types import SHBasisSpec
+from spharray.types import SHBasisSpec
 
 
 # ---------------------------------------------------------------------------
@@ -231,8 +231,8 @@ class TestSHBeamSteering:
         look_az, look_colat = 0.5, 0.8
         w = steer_sh_weights(b_n, look_az, look_colat, basis)
 
-        from spherical_array_processing.types import SphericalGrid
-        from spherical_array_processing.sh import matrix as sh_matrix
+        from spharray.types import SphericalGrid
+        from spharray.sh import matrix as sh_matrix
         look = SphericalGrid(
             azimuth=np.array([look_az]),
             angle2=np.array([look_colat]),
@@ -257,8 +257,8 @@ class TestSHBeamSteering:
         look_az, look_colat = 0.5, 0.8
         w = steer_sh_weights(b_n, look_az, look_colat, basis)
 
-        from spherical_array_processing.types import SphericalGrid
-        from spherical_array_processing.sh import matrix as sh_matrix
+        from spharray.types import SphericalGrid
+        from spharray.sh import matrix as sh_matrix
         look = SphericalGrid(
             azimuth=np.array([look_az]),
             angle2=np.array([look_colat]),
@@ -382,7 +382,7 @@ class TestCovarianceUtils:
         N = 2
         spec = SHBasisSpec(max_order=N, basis="complex", angle_convention="az_colat")
         search = fibonacci_grid(300)
-        from spherical_array_processing.sh import matrix as sh_matrix
+        from spharray.sh import matrix as sh_matrix
         Y = sh_matrix(spec, search)
         src_idx = 77
         y_src = Y[src_idx, :]
@@ -390,7 +390,7 @@ class TestCovarianceUtils:
         R = np.outer(y_src, y_src.conj()) + 0.01 * np.eye(spec.n_coeffs)
         R_fb = forward_backward_cov(R)
         R_dl = diagonal_loading(R_fb, 1e-3)
-        from spherical_array_processing.doa import music_spectrum
+        from spharray.doa import music_spectrum
         result = music_spectrum(R_dl, search, spec, n_sources=1)
         found_idx = result.peak_indices[0]
 

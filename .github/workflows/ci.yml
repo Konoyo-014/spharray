@@ -69,12 +69,12 @@ jobs:
           python -m pip install --force-reinstall dist/*.whl
           python - <<'PY'
           import importlib.resources as ir
-          import spherical_array_processing as sap
-          from spherical_array_processing import SHBasisSpec
-          from spherical_array_processing.array.sampling import fibonacci_grid
-          from spherical_array_processing.sh import matrix
+          import spharray as sap
+          from spharray import SHBasisSpec
+          from spharray.array.sampling import fibonacci_grid
+          from spharray.sh import matrix
           assert sap.__version__ == "0.3.0"
-          assert ir.files("spherical_array_processing").joinpath("py.typed").is_file()
+          assert ir.files("spharray").joinpath("py.typed").is_file()
           grid = fibonacci_grid(16)
           y = matrix(SHBasisSpec(max_order=1, basis="complex", angle_convention="az_colat"), grid)
           assert y.shape == (16, 4)
@@ -84,7 +84,7 @@ jobs:
       - name: Source distribution smoke test
         run: |
           tmpdir="$(mktemp -d)"
-          tar -xzf dist/spherical_array_processing-*.tar.gz -C "$tmpdir"
-          cd "$tmpdir"/spherical_array_processing-*
+          tar -xzf dist/spharray-*.tar.gz -C "$tmpdir"
+          cd "$tmpdir"/spharray-*
           python -m pip install ".[dev]"
           python -m pytest -q --tb=short

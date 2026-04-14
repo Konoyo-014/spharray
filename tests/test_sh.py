@@ -17,15 +17,15 @@ import numpy as np
 import pytest
 from scipy.special import eval_legendre
 
-from spherical_array_processing.sh import (
+from spharray.sh import (
     acn_index, complex_matrix, direct_sht, inverse_sht,
     matrix, real_matrix,
     complex_to_real_coeffs, real_to_complex_coeffs,
     replicate_per_order,
 )
-from spherical_array_processing.sh.basis import acn_index as acn
-from spherical_array_processing.array.sampling import equiangle_sampling, fibonacci_grid
-from spherical_array_processing.types import SHBasisSpec, SphericalGrid
+from spharray.sh.basis import acn_index as acn
+from spharray.array.sampling import equiangle_sampling, fibonacci_grid
+from spharray.types import SHBasisSpec, SphericalGrid
 
 
 # ── ACN index ────────────────────────────────────────────────────────────────

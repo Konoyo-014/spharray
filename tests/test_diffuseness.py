@@ -1,4 +1,4 @@
-"""Tests for spherical_array_processing.diffuseness.estimators.
+"""Tests for spharray.diffuseness.estimators.
 
 Mathematical invariants verified:
 - IE: diffuse field (R = I) → Ψ = 1; coherent source → Ψ = 0
@@ -12,7 +12,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from spherical_array_processing.diffuseness.estimators import (
+from spharray.diffuseness.estimators import (
     diffuseness_cmd,
     diffuseness_ie,
     diffuseness_sv,

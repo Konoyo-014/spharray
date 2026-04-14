@@ -9,7 +9,7 @@ then read the concepts page when a term becomes unfamiliar.
 ## Install From A Checkout
 
 Create a virtual environment from the open-source repository root. The repository
-root is the directory that contains `pyproject.toml`, `spherical_array_processing/`,
+root is the directory that contains `pyproject.toml`, `spharray/`,
 `examples/`, and `tests/`.
 
 ```bash
@@ -23,7 +23,7 @@ After installation, verify that the local checkout is importable.
 
 ```bash
 python - <<'PY'
-import spherical_array_processing as sap
+import spharray as sap
 print(sap.__version__)
 print(sap.array.fibonacci_grid(8).size)
 PY
@@ -52,7 +52,7 @@ use those coefficients for beamforming or DOA estimation.
 
 ```python
 import numpy as np
-import spherical_array_processing as sap
+import spharray as sap
 
 order = 3
 grid = sap.array.fibonacci_grid(1000)

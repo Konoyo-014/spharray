@@ -1,4 +1,4 @@
-"""Basic usage demo for spherical-array-processing.
+"""Basic usage demo for spharray.
 
 Demonstrates the most common entry points:
 - Building a Fibonacci grid
@@ -19,7 +19,7 @@ from _bootstrap import bootstrap_repo_import
 
 bootstrap_repo_import()
 
-import spherical_array_processing as sap
+import spharray as sap
 
 
 def main() -> None:

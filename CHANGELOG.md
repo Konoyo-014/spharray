@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `spherical-array-processing` are documented here.
+All notable changes to `spharray` are documented here.
 
 ## [0.3.0] — 2026-04-14
 

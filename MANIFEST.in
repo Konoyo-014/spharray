@@ -11,7 +11,7 @@ graft docs
 graft examples
 graft tests
 
-recursive-include spherical_array_processing *.py py.typed
+recursive-include spharray *.py py.typed
 
 prune .git
 prune .github
@@ -23,7 +23,7 @@ prune dist
 prune htmlcov
 prune artifacts
 prune figures
-prune spherical_array_processing.egg-info
+prune spharray.egg-info
 
 global-exclude .DS_Store
 global-exclude *.py[cod]

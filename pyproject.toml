@@ -3,7 +3,7 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "spherical-array-processing"
+name = "spharray"
 version = "0.3.0"
 description = "Self-contained Python toolkit for spherical array processing"
 readme = "README.md"
@@ -38,9 +38,9 @@ dependencies = [
 ]
 
 [project.urls]
-"Source" = "https://github.com/Konoyo-014/spherical-array-processing"
-"Bug Tracker" = "https://github.com/Konoyo-014/spherical-array-processing/issues"
-"Changelog" = "https://github.com/Konoyo-014/spherical-array-processing/blob/main/CHANGELOG.md"
+"Source" = "https://github.com/Konoyo-014/spharray"
+"Bug Tracker" = "https://github.com/Konoyo-014/spharray/issues"
+"Changelog" = "https://github.com/Konoyo-014/spharray/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 audio = [
@@ -60,10 +60,10 @@ notebook = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["spherical_array_processing*"]
+include = ["spharray*"]
 
 [tool.setuptools.package-data]
-spherical_array_processing = ["py.typed"]
+spharray = ["py.typed"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

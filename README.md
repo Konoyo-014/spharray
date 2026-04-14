@@ -1,6 +1,6 @@
-# spherical-array-processing
+# spharray
 
-[![CI](https://github.com/Konoyo-014/spherical-array-processing/actions/workflows/ci.yml/badge.svg)](https://github.com/Konoyo-014/spherical-array-processing/actions/workflows/ci.yml)
+[![CI](https://github.com/Konoyo-014/spharray/actions/workflows/ci.yml/badge.svg)](https://github.com/Konoyo-014/spharray/actions/workflows/ci.yml)
 
 A self-contained Python toolkit for spherical microphone array processing. This
 repository is the intended open-source root; migration workspaces, local virtual
@@ -21,6 +21,14 @@ this directory.
 - **Plotting**: 3-D array geometry, 2-D spatial maps, MATLAB-like figure style
 
 ## Installation
+
+Install the current public release directly from GitHub:
+
+```bash
+pip install "spharray @ git+https://github.com/Konoyo-014/spharray.git@v0.3.0"
+```
+
+For development from a local checkout:
 
 ```bash
 python3 -m venv .venv
@@ -44,7 +52,7 @@ Optional extras:
 
 ```python
 import numpy as np
-import spherical_array_processing as sap
+import spharray as sap
 
 # ── Spatial sampling ──────────────────────────────────────────────────────────
 grid = sap.array.fibonacci_grid(100)   # SphericalGrid, 100 directions

@@ -1,7 +1,7 @@
 """Tests for coordinate-system transformations."""
 import numpy as np
 import pytest
-from spherical_array_processing.coords import (
+from spharray.coords import (
     azel_to_az_colat, az_colat_to_azel,
     cart_to_sph, sph_to_cart, unit_sph_to_cart,
 )

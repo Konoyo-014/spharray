@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import numpy as np
 
-from spherical_array_processing import SHBasisSpec
-from spherical_array_processing.array.sampling import fibonacci_grid
-from spherical_array_processing.sh import acn_index, matrix
-from spherical_array_processing.toolkit import spatial as tk_spatial
+from spharray import SHBasisSpec
+from spharray.array.sampling import fibonacci_grid
+from spharray.sh import acn_index, matrix
+from spharray.toolkit import spatial as tk_spatial
 
 try:
     from scipy.special import sph_harm_y as _sph_harm_y

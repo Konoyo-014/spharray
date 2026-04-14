@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing to `spherical-array-processing`.
+Thanks for contributing to `spharray`.
 
 ## Development Setup
 

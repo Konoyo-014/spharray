@@ -34,8 +34,8 @@ fresh environment.
 ```bash
 python -m build
 tmpdir="$(mktemp -d)"
-tar -xzf dist/spherical_array_processing-*.tar.gz -C "$tmpdir"
-cd "$tmpdir"/spherical_array_processing-*
+tar -xzf dist/spharray-*.tar.gz -C "$tmpdir"
+cd "$tmpdir"/spharray-*
 python -m pip install ".[dev]"
 python -m pytest -q --tb=short
 ```
@@ -44,18 +44,18 @@ Install the wheel in a clean environment and verify import, version, and typed
 package marker.
 
 ```bash
-python -m pip install dist/spherical_array_processing-*-py3-none-any.whl
+python -m pip install dist/spharray-*-py3-none-any.whl
 python - <<'PY'
 import importlib.resources as ir
-import spherical_array_processing as sap
+import spharray as sap
 print(sap.__version__)
-print(ir.files("spherical_array_processing").joinpath("py.typed").is_file())
+print(ir.files("spharray").joinpath("py.typed").is_file())
 PY
 ```
 
 ## Metadata
 
-Confirm that `pyproject.toml`, `spherical_array_processing.__version__`,
+Confirm that `pyproject.toml`, `spharray.__version__`,
 `CHANGELOG.md`, and any release tag all agree on the version. Confirm that
 `README.md`, `docs/getting_started.md`, `docs/concepts.md`, and
 `examples/README.md` still describe runnable entry points.

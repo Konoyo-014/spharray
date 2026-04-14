@@ -9,7 +9,7 @@ Mathematical properties verified:
 """
 import numpy as np
 import pytest
-from spherical_array_processing.acoustics import (
+from spharray.acoustics import (
     besseljs, besseljsd, besselhs, besselhsd,
     bn_matrix, plane_wave_radial_bn, sph_modal_coeffs,
 )

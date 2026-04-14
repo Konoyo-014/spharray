@@ -13,7 +13,7 @@ from _bootstrap import bootstrap_repo_import
 
 bootstrap_repo_import()
 
-import spherical_array_processing as sap
+import spharray as sap
 
 
 def main() -> None:

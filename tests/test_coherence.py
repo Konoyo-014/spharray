@@ -1,4 +1,4 @@
-"""Tests for spherical_array_processing.coherence.diffuse.
+"""Tests for spharray.coherence.diffuse.
 
 Mathematical invariants:
 - Auto-coherence (same sensor) = 1 at all frequencies
@@ -13,7 +13,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from spherical_array_processing.coherence.diffuse import (
+from spharray.coherence.diffuse import (
     diffuse_coherence_from_weights,
     diffuse_coherence_matrix_omni,
 )

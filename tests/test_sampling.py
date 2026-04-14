@@ -1,4 +1,4 @@
-"""Tests for spherical_array_processing.array.sampling.
+"""Tests for spharray.array.sampling.
 
 Mathematical invariants:
 - Weights sum to 4π (total solid angle)
@@ -13,13 +13,13 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from spherical_array_processing.array.sampling import (
+from spharray.array.sampling import (
     equiangle_sampling,
     fibonacci_grid,
     get_tdesign_fallback,
 )
-from spherical_array_processing.sh import matrix as sh_matrix
-from spherical_array_processing.types import SHBasisSpec
+from spharray.sh import matrix as sh_matrix
+from spharray.types import SHBasisSpec
 
 
 # ---------------------------------------------------------------------------

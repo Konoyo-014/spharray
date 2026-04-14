@@ -9,7 +9,7 @@ Mathematical properties verified:
 """
 import numpy as np
 import pytest
-from spherical_array_processing.beamforming import (
+from spharray.beamforming import (
     axisymmetric_pattern,
     beam_weights_cardioid,
     beam_weights_hypercardioid,

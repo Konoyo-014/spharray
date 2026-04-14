@@ -1,4 +1,4 @@
-"""Tests for spherical_array_processing.doa.spectra.
+"""Tests for spharray.doa.spectra.
 
 Mathematical invariants:
 - PWD: rank-1 covariance from a known direction → peak at that direction
@@ -13,15 +13,15 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from spherical_array_processing.array.sampling import fibonacci_grid
-from spherical_array_processing.doa.spectra import (
+from spharray.array.sampling import fibonacci_grid
+from spharray.doa.spectra import (
     music_spectrum,
     peak_pick_spectrum,
     pwd_spectrum,
     spatial_spectrum_from_map,
 )
-from spherical_array_processing.sh import matrix as sh_matrix
-from spherical_array_processing.types import SHBasisSpec
+from spharray.sh import matrix as sh_matrix
+from spharray.types import SHBasisSpec
 
 
 # ---------------------------------------------------------------------------

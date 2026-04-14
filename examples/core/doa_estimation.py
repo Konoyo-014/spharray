@@ -19,8 +19,8 @@ from _bootstrap import bootstrap_repo_import
 
 bootstrap_repo_import()
 
-import spherical_array_processing as sap
-from spherical_array_processing.doa import music_spectrum, pwd_spectrum
+import spharray as sap
+from spharray.doa import music_spectrum, pwd_spectrum
 
 
 def angular_distance_deg(az1: float, el1: float, az2: float, el2: float) -> float:
