@@ -8,14 +8,11 @@ then read the concepts page when a term becomes unfamiliar.
 
 ## Install The Public Release
 
-Install the current public release directly from GitHub:
+Install the current public release from PyPI:
 
 ```bash
-pip install "https://github.com/Konoyo-014/spharray/releases/download/v0.3.0/spharray-0.3.0-py3-none-any.whl"
+pip install spharray
 ```
-
-After the package is published to PyPI, the install command will be `pip install
-spharray`.
 
 ## Install From A Checkout
 
