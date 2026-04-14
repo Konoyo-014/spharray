@@ -2,6 +2,13 @@
 
 All notable changes to `spharray` are documented here.
 
+## [0.3.1] — 2026-04-14
+
+### Documentation
+
+- Updated installation documentation to use the public PyPI command
+  `pip install spharray`.
+
 ## [0.3.0] — 2026-04-14
 
 ### Bug fixes

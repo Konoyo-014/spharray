@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spharray"
-version = "0.3.0"
+version = "0.3.1"
 description = "Self-contained Python toolkit for spherical array processing"
 readme = "README.md"
 requires-python = ">=3.11"

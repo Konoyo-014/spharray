@@ -73,7 +73,7 @@ jobs:
           from spharray import SHBasisSpec
           from spharray.array.sampling import fibonacci_grid
           from spharray.sh import matrix
-          assert sap.__version__ == "0.3.0"
+          assert sap.__version__ == "0.3.1"
           assert ir.files("spharray").joinpath("py.typed").is_file()
           grid = fibonacci_grid(16)
           y = matrix(SHBasisSpec(max_order=1, basis="complex", angle_convention="az_colat"), grid)
