@@ -25,8 +25,11 @@ this directory.
 Install the current public release directly from GitHub:
 
 ```bash
-pip install "spharray @ git+https://github.com/Konoyo-014/spharray.git@v0.3.0"
+pip install "https://github.com/Konoyo-014/spharray/releases/download/v0.3.0/spharray-0.3.0-py3-none-any.whl"
 ```
+
+After the package is published to PyPI, the install command will be `pip install
+spharray`.
 
 For development from a local checkout:
 
