@@ -17,3 +17,8 @@ figures/
 *.png
 *.pdf
 *.svg
+
+# Local release notes, assistant reviews, and generated draft docs.
+CODEX_*.md
+docs/release_checklist.md
+docs/ambisonics_*.md
