@@ -1,5 +1,10 @@
 # spharray
 
+> **Project consolidated.** This repository has been superseded by
+> [`Konoyo-014/spherical-array-processing`](https://github.com/Konoyo-014/spherical-array-processing).
+> Use the `spherical-array-processing` PyPI package for the merged and latest
+> code line. The last release here was `spharray` 0.3.1.
+
 [![CI](https://github.com/Konoyo-014/spharray/actions/workflows/ci.yml/badge.svg)](https://github.com/Konoyo-014/spharray/actions/workflows/ci.yml)
 
 A self-contained Python toolkit for spherical microphone array processing. This
